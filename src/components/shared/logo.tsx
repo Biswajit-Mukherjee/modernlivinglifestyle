@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { SITE } from "@/lib/data";
 
 type Props = Readonly<{ className?: string; hidden?: boolean }>;
 
@@ -22,7 +23,7 @@ const Logo: React.FC<Props> = ({ className = "", hidden = false }) => {
           y="32"
           width="30"
           height="4"
-          fill="white"
+          className="fill-background"
           transform="rotate(45 20 32)"
         />
 
@@ -36,7 +37,7 @@ const Logo: React.FC<Props> = ({ className = "", hidden = false }) => {
           fill="hsl(262.1 83.3% 57.8%)"
           className={cn(hidden && "hidden sm:block")}
         >
-          Modern Living Lifestyle
+          {SITE.name}
         </text>
       </svg>
     </span>

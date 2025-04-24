@@ -13,6 +13,7 @@ import type { SanityTypes } from "@/@types";
 import { ContactFormInputs } from "@/components/shared/contact-form";
 import ContactFormAdminEmail from "@/emails/contact-form-admin";
 import ContactFormUserEmail from "@/emails/contact-form-user";
+import { SENDER } from "@/lib/data";
 
 export async function sendEmail(data: ContactFormInputs) {
   const result = ContactFormSchema.safeParse(data);
@@ -27,7 +28,7 @@ export async function sendEmail(data: ContactFormInputs) {
       /** Send email invoice to admin and user */
 
       const mailToAdmin = await resend.emails.send({
-        from: "The Daily Blogs <no-reply@the-daily-blogs.com>",
+        from: SENDER,
         to: [profile.email],
         subject: `Admin invoice for #${invoiceId}`,
         react: ContactFormAdminEmail({
@@ -42,7 +43,7 @@ export async function sendEmail(data: ContactFormInputs) {
       });
 
       const mailToUser = await resend.emails.send({
-        from: "The Daily Blogs <no-reply@the-daily-blogs.com>",
+        from: SENDER,
         to: [email],
         subject: `User invoice for #${invoiceId}`,
         react: ContactFormUserEmail({
