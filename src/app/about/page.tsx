@@ -16,34 +16,30 @@ import type { SanityTypes } from "@/@types";
 import { urlFor } from "@/lib/sanity";
 import { SITE } from "@/lib/data";
 
-export const metadata: Metadata = {
-  title:
-    "About Us | The Daily Blogs – Empowering Wellness, Positivity & Life Transformation",
-  metadataBase: new URL(SITE.url),
-  description:
-    "Learn more about The Daily Blogs — a positive space for fitness, lifestyle, mental health, and personal growth content. Join our mission to inspire, educate, and empower.",
-  keywords: [
-    "fitness blog",
-    "lifestyle tips",
-    "mental health blog",
-    "well-being",
-    "personal growth",
-    "positive living",
-    "life transformation",
-    "The Daily Blogs",
-    "about The Daily Blogs",
-    "fitness lifestyle blog",
-    "mental wellness blog",
-    "positive living",
-    "personal development",
-    "health and wellness blog",
-    "life transformation stories",
-  ],
-  robots: "index,noarchive,follow,max-image-preview:large",
-  alternates: {
-    canonical: new URL(SITE.url + "/about"),
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const aboutSite: SanityTypes.AboutSite = await getSiteInfo();
+
+  return {
+    title: aboutSite.metadata.title,
+    description: aboutSite.metadata.description,
+    metadataBase: new URL(aboutSite.metadata.metadataBase),
+    applicationName: aboutSite.metadata.applicationName,
+    creator: aboutSite.metadata.creator,
+    keywords: aboutSite.metadata.keywords ?? aboutSite.metadata.title,
+    authors: [{ name: aboutSite.metadata.creator }],
+    robots: aboutSite.metadata.robots,
+    openGraph: {
+      title: aboutSite.metadata.title,
+      description: aboutSite.metadata.description,
+      images: urlFor(aboutSite.metadata.image).url(),
+      type: "website",
+      locale: "en_IN",
+    },
+    alternates: {
+      canonical: new URL(aboutSite.metadata.metadataBase),
+    },
+  };
+}
 
 const About: NextPage = async () => {
   const profile: SanityTypes.Profile = await getProfile();
@@ -53,27 +49,25 @@ const About: NextPage = async () => {
     "@context": "https://schema.org",
     "@type": "AboutPage",
     name: "About Us",
-    url: "https://www.the-daily-blogs.com/about",
-    description:
-      "Learn more about The Daily Blogs — a platform that inspires healthier living through fitness, lifestyle, mental health, positivity, and personal growth content.",
+    url: SITE.url + "/about",
+    description: `Learn more about ${SITE.name} — a platform that inspires healthier living through fitness, lifestyle, mental health, positivity, and personal growth content.`,
     inLanguage: "en",
     isPartOf: {
       "@type": "WebSite",
-      name: "The Daily Blogs",
-      url: "https://www.the-daily-blogs.com",
+      name: SITE.name,
+      url: SITE.url,
     },
     author: {
       "@type": "Person",
       name: SITE.creator,
-      url: "https://www.the-daily-blogs.com/about",
+      url: SITE.url + "/about",
       sameAs: [profile.facebook, profile.youtube],
-      description:
-        "Author and founder of The Daily Blogs, sharing insights on fitness, lifestyle, mental health, positivity, and personal transformation.",
+      description: `Author and founder of ${SITE.name}, sharing insights on fitness, lifestyle, mental health, positivity, and personal transformation.`,
       image: urlFor(profile.image).url() ?? "",
       jobTitle: "Blogger & Wellness Content Creator",
       worksFor: {
         "@type": "Organization",
-        name: "The Daily Blogs",
+        name: SITE.name,
       },
     },
   };
@@ -127,15 +121,6 @@ const About: NextPage = async () => {
                   />
                 </AspectRatio>
               </div>
-            </div>
-          </section>
-
-          <section
-            className="w-full max-w-6xl mx-auto mt-20"
-            data-layout="section"
-          >
-            <div className="w-full max-w-full mt-8 font-normal text-base text-wrap leading-normal antialiased prose dark:prose-invert">
-              <PortableText value={aboutSite.largeDescription} />
             </div>
           </section>
 

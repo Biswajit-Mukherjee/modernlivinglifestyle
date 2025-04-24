@@ -17,38 +17,30 @@ import { SITE } from "@/lib/data";
 /** Runtime */
 export const runtime = "edge";
 
-export const metadata: Metadata = {
-  title:
-    "The Daily Blogs | Your Source for Fitness, Positivity & Life Transformation",
-  metadataBase: new URL(SITE.url),
-  description:
-    "Welcome to The Daily Blogs – explore powerful insights on fitness, lifestyle, mental health, self-transformation, well-being, and sociology. Discover content that inspires growth, positivity, and purpose.",
-  keywords: [
-    "fitness blog",
-    "mental health",
-    "lifestyle tips",
-    "life transformation",
-    "positive living",
-    "blog",
-    "well-being blog",
-    "sociology articles",
-    "personal growth",
-    "motivation",
-  ],
-  robots: "index,noarchive,follow,max-image-preview:large",
-  openGraph: {
-    title:
-      "The Daily Blogs | Your Source for Fitness, Positivity & Life Transformation",
-    description:
-      "Explore inspiring blog posts on fitness, lifestyle, mental wellness, positivity, and sociology. Discover daily insights for a better you.",
-    images: new URL(SITE.url + "/assets/blogs-cover.webp"),
-    type: "website",
-    locale: "en_IN",
-  },
-  alternates: {
-    canonical: new URL(SITE.url),
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const home: SanityTypes.Homepage = await getHomepageDetails();
+
+  return {
+    title: home.metadata.title,
+    description: home.metadata.description,
+    metadataBase: new URL(home.metadata.metadataBase),
+    applicationName: home.metadata.applicationName,
+    creator: home.metadata.creator,
+    keywords: home.metadata.keywords ?? home.metadata.title,
+    authors: [{ name: home.metadata.creator }],
+    robots: home.metadata.robots,
+    openGraph: {
+      title: home.metadata.title,
+      description: home.metadata.description,
+      images: urlFor(home.metadata.image).url(),
+      type: "website",
+      locale: "en_IN",
+    },
+    alternates: {
+      canonical: new URL(home.metadata.metadataBase),
+    },
+  };
+}
 
 const Home: NextPage = async () => {
   const home: SanityTypes.Homepage = await getHomepageDetails();
@@ -57,18 +49,17 @@ const Home: NextPage = async () => {
   const schemaData: WithContext<WebSite> = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "The Daily Blogs",
-    url: "https://www.the-daily-blogs.com",
-    description:
-      "The Daily Blogs shares uplifting content on fitness, lifestyle, mental health, well-being, positivity, and personal transformation to inspire and empower everyday lives.",
+    name: SITE.name,
+    url: SITE.url,
+    description: `${SITE.name} shares uplifting content on fitness, lifestyle, mental health, well-being, positivity, and personal transformation to inspire and empower everyday lives.`,
     inLanguage: "en",
     publisher: {
       "@type": "Organization",
-      name: "The Daily Blogs",
-      url: "https://www.the-daily-blogs.com",
+      name: SITE.name,
+      url: SITE.url,
       logo: {
         "@type": "ImageObject",
-        url: "https://www.the-daily-blogs.com/favicon.ico",
+        url: SITE.url + "/favicon.ico",
       },
     },
   };
@@ -127,8 +118,8 @@ const Home: NextPage = async () => {
           </h3>
 
           <div className="w-full max-w-xl mt-2.5 mx-auto mb-10 text-center text-foreground text-base leading-normal antialiased">
-            Subscribe to our newsletter and receive the latest updates on what&apos;s new,
-            recently published blogs and other important stuff.
+            Subscribe to our newsletter and receive the latest updates on
+            what&apos;s new, recently published blogs and other important stuff.
           </div>
 
           <NewsLetterForm />

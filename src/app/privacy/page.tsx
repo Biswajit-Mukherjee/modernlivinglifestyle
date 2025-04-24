@@ -5,31 +5,34 @@ import { WebPage, WithContext } from "schema-dts";
 import dayjs from "dayjs";
 import type { SanityTypes } from "@/@types";
 import { getPrivacyPolicy } from "@/lib/utils";
-import { SITE } from "@/lib/data";
 import StructuredData from "@/components/structured-data";
+import { urlFor } from "@/lib/sanity";
+import { SITE } from "@/lib/data";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | The Daily Blogs – Your Data, Your Trust",
-  metadataBase: new URL(SITE.url),
-  description:
-    "Read the privacy policy for The Daily Blogs to learn how we collect, use, and protect your personal data when you visit our wellness, lifestyle, and mental health blog.",
-  keywords: [
-    "privacy",
-    "privacy policy",
-    "data protection",
-    "user data privacy",
-    "wellness blog privacy",
-    "lifestyle blog terms",
-    "The Daily Blogs policy",
-    "personal data use",
-    "GDPR",
-  ],
-  alternates: {
-    canonical: new URL(SITE.url + '/privacy'),
-  },
-  robots: "index,noarchive,follow,max-image-preview:large",
-  authors: [{ name: SITE.creator }],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const policy: SanityTypes.PrivacyPolicy = await getPrivacyPolicy();
+
+  return {
+    title: policy.metadata.title,
+    description: policy.metadata.description,
+    metadataBase: new URL(policy.metadata.metadataBase),
+    applicationName: policy.metadata.applicationName,
+    creator: policy.metadata.creator,
+    keywords: policy.metadata.keywords ?? policy.metadata.title,
+    authors: [{ name: policy.metadata.creator }],
+    robots: policy.metadata.robots,
+    openGraph: {
+      title: policy.metadata.title,
+      description: policy.metadata.description,
+      images: urlFor(policy.metadata.image).url(),
+      type: "website",
+      locale: "en_IN",
+    },
+    alternates: {
+      canonical: new URL(policy.metadata.metadataBase),
+    },
+  };
+}
 
 const Privacy: NextPage = async () => {
   const policy: SanityTypes.PrivacyPolicy = await getPrivacyPolicy();
@@ -38,14 +41,13 @@ const Privacy: NextPage = async () => {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: "Privacy Policy",
-    url: "https://www.the-daily-blogs.com/privacy",
-    description:
-      "Read the privacy policy for The Daily Blogs to learn how we collect, use, and protect your personal data when you visit our wellness, lifestyle, and mental health blog.",
+    url: SITE.url + "/privacy",
+    description: `Learn how ${SITE.name} handles personal information, data collection, and cookies. This page outlines our privacy practices and compliance standards.`,
     inLanguage: "en",
-    isPartOf: {
-      "@type": "WebSite",
-      name: "The Daily Blogs",
-      url: "https://www.the-daily-blogs.com",
+    publisher: {
+      "@type": "Organization",
+      name: SITE.name,
+      url: SITE.url,
     },
   };
 
@@ -74,12 +76,12 @@ const Privacy: NextPage = async () => {
             className="policy w-full max-w-full mt-16 mx-0 mb-24 prose dark:prose-invert text-foreground text-base font-normal leading-normal antialiased"
           >
             <PortableText value={policy.description} />
-
-            <div className="mt-10" data-uia="updation-date">
-              <strong>Last Updated:</strong>{" "}
-              {dayjs(policy.updatedAt).format("MMMM D, YYYY")}
-            </div>
           </article>
+
+          <div className="w-full" data-uia="updation-date">
+            <strong>Last Updated:</strong>{" "}
+            {dayjs(policy.updatedAt).format("MMMM D, YYYY")}
+          </div>
         </section>
       </div>
     </>

@@ -123,7 +123,17 @@ export async function getPrivacyPolicy() {
       "createdAt": _createdAt,
       "updatedAt": _updatedAt,
       title,
-      description
+      description,
+      "metadata":pageMeta->{
+        title,
+        description,
+        image,
+        applicationName,
+        creator,
+        metadataBase,
+        robots,
+        keywords
+      },
     }`;
 
   const data: SanityTypes.PrivacyPolicy[] = await sanityClient.fetch(query);
@@ -135,8 +145,19 @@ export async function getTermsAndConditions() {
   const query = `
     *[_type == 'terms'] {
       "createdAt": _createdAt,
+      "updatedAt": _updatedAt,
       title,
-      description
+      description,
+      "metadata":pageMeta->{
+        title,
+        description,
+        image,
+        applicationName,
+        creator,
+        metadataBase,
+        robots,
+        keywords
+      },
     }`;
 
   const data: SanityTypes.Terms[] = await sanityClient.fetch(query);
@@ -149,7 +170,17 @@ export async function getDisclaimer() {
     *[_type == 'disclaimer'] {
       "createdAt": _createdAt,
       title,
-      description
+      description,
+      "metadata":pageMeta->{
+        title,
+        description,
+        image,
+        applicationName,
+        creator,
+        metadataBase,
+        robots,
+        keywords
+      },
     }`;
 
   const data: SanityTypes.Disclaimer[] = await sanityClient.fetch(query);
@@ -163,9 +194,18 @@ export async function getSiteInfo() {
       title,
       subtitle,
       description,
-      largeDescription,
       hero,
-      about
+      about,
+      "metadata":pageMeta->{
+        title,
+        description,
+        image,
+        applicationName,
+        creator,
+        metadataBase,
+        robots,
+        keywords
+      },
     }`;
 
   const data: SanityTypes.AboutSite[] = await sanityClient.fetch(query);
@@ -179,7 +219,17 @@ export async function getContactUsDetails() {
       hero,
       title,
       description,
-      modal -> { name, title, body }
+      modal -> { name, title, body },
+      "metadata":pageMeta->{
+        title,
+        description,
+        image,
+        applicationName,
+        creator,
+        metadataBase,
+        robots,
+        keywords
+      },
     }`;
 
   const data: SanityTypes.Contact[] = await sanityClient.fetch(query);
@@ -192,7 +242,17 @@ export async function getHomepageDetails() {
     *[_type == 'home'] {
       title,
       image,
-      intro
+      intro,
+      "metadata":pageMeta->{
+        title,
+        description,
+        image,
+        applicationName,
+        creator,
+        metadataBase,
+        robots,
+        keywords
+      },
     }`;
 
   const data: SanityTypes.Homepage[] = await sanityClient.fetch(query);

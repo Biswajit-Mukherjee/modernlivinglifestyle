@@ -6,29 +6,33 @@ import dayjs from "dayjs";
 import type { SanityTypes } from "@/@types";
 import { getDisclaimer } from "@/lib/utils";
 import StructuredData from "@/components/structured-data";
+import { urlFor } from "@/lib/sanity";
 import { SITE } from "@/lib/data";
 
-export const metadata: Metadata = {
-  title:
-    "Disclaimer | The Daily Blogs – General Advice, Health Content & Liability Info",
-  metadataBase: new URL(SITE.url),
-  description:
-    "Read our disclaimer to understand the limits of our health, fitness, and lifestyle advice. The Daily Blogs provides educational content, not professional medical or psychological guidance.",
-  keywords: [
-    "disclaimer",
-    "health advice disclaimer",
-    "fitness blog disclaimer",
-    "mental health content",
-    "liability notice",
-    "general wellness info",
-    "The Daily Blogs",
-  ],
-  alternates: {
-    canonical: new URL(SITE.url + "/disclaimer"),
-  },
-  robots: "index,noarchive,follow,max-image-preview:large",
-  authors: [{ name: SITE.creator }],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const disclaimer: SanityTypes.Disclaimer = await getDisclaimer();
+
+  return {
+    title: disclaimer.metadata.title,
+    description: disclaimer.metadata.description,
+    metadataBase: new URL(disclaimer.metadata.metadataBase),
+    applicationName: disclaimer.metadata.applicationName,
+    creator: disclaimer.metadata.creator,
+    keywords: disclaimer.metadata.keywords ?? disclaimer.metadata.title,
+    authors: [{ name: disclaimer.metadata.creator }],
+    robots: disclaimer.metadata.robots,
+    openGraph: {
+      title: disclaimer.metadata.title,
+      description: disclaimer.metadata.description,
+      images: urlFor(disclaimer.metadata.image).url(),
+      type: "website",
+      locale: "en_IN",
+    },
+    alternates: {
+      canonical: new URL(disclaimer.metadata.metadataBase),
+    },
+  };
+}
 
 const Disclaimer: NextPage = async () => {
   const disclaimer: SanityTypes.Disclaimer = await getDisclaimer();
@@ -37,14 +41,13 @@ const Disclaimer: NextPage = async () => {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: "Disclaimer",
-    url: "https://www.the-daily-blogs.com/disclaimer",
-    description:
-      "Read our disclaimer to understand the limits of our health, fitness, and lifestyle advice. The Daily Blogs provides educational content, not professional medical or psychological guidance.",
+    url: SITE.url + "/disclaimer",
+    description: `Disclaimer for ${SITE.name} outlining limitations of liability, content accuracy, and user responsibilities. Learn more about how to interpret our blog posts and third-party links.`,
     inLanguage: "en",
     isPartOf: {
       "@type": "WebSite",
-      name: "The Daily Blogs",
-      url: "https://www.the-daily-blogs.com",
+      name: SITE.name,
+      url: SITE.url,
     },
   };
 

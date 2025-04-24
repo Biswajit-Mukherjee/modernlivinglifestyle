@@ -4,15 +4,15 @@ import {
   AboutPage,
   BlogPosting,
   CollectionPage,
+  Organization,
   WebPage,
   WebSite,
   WithContext,
 } from "schema-dts";
-import { TContactPage } from "@/@types";
 
 type Props = {
   data: WithContext<
-    BlogPosting | WebPage | WebSite | AboutPage | TContactPage | CollectionPage | never
+    BlogPosting | WebPage | WebSite | AboutPage | CollectionPage | Organization
   >;
 };
 

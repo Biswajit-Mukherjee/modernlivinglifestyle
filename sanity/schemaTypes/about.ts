@@ -21,13 +21,6 @@ export default {
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'largeDescription',
-      title: 'Large Description',
-      type: 'array',
-      of: [{type: 'block'}],
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: 'hero',
       title: 'Hero image',
       type: 'image',
@@ -42,6 +35,14 @@ export default {
       type: 'image',
       description: 'This will be the about site image',
       options: {hotspot: true}, // Allows you to crop the image
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'pageMeta',
+      title: 'Page Metadata',
+      type: 'reference',
+      to: [{type: 'metadata'}],
+      description: 'This will be page metadata for SEO',
       validation: (rule) => rule.required(),
     }),
   ],

@@ -37,5 +37,13 @@ export default {
       description: 'This will be the popup modal on contact form submit',
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'pageMeta',
+      title: 'Page Metadata',
+      type: 'reference',
+      to: [{type: 'metadata'}],
+      description: 'This will be page metadata for SEO',
+      validation: (rule) => rule.required(),
+    }),
   ],
 }

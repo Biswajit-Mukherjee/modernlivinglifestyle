@@ -1,34 +1,38 @@
 import * as React from "react";
 import type { Metadata, NextPage } from "next";
 import { PortableText } from "@portabletext/react";
-import dayjs from "dayjs";
 import { WebPage, WithContext } from "schema-dts";
+import dayjs from "dayjs";
 import type { SanityTypes } from "@/@types";
 import { getTermsAndConditions } from "@/lib/utils";
 import StructuredData from "@/components/structured-data";
+import { urlFor } from "@/lib/sanity";
 import { SITE } from "@/lib/data";
 
-export const metadata: Metadata = {
-  title:
-    "Terms and Conditions | The Daily Blogs – Usage Guidelines & Legal Terms",
-  metadataBase: new URL(SITE.url),
-  description:
-    "Review the terms and conditions for using The Daily Blogs, a wellness and lifestyle platform promoting fitness, mental health, and personal growth. Understand your rights and responsibilities.",
-  keywords: [
-    "terms and conditions",
-    "usage terms",
-    "legal terms",
-    "blog rules",
-    "fitness blog terms",
-    "wellness content use",
-    "The Daily Blogs terms",
-  ],
-  alternates: {
-    canonical: new URL(SITE.url + "/terms-and-conditions"),
-  },
-  robots: "index,noarchive,follow,max-image-preview:large",
-  authors: [{ name: SITE.creator }],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const terms: SanityTypes.Terms = await getTermsAndConditions();
+
+  return {
+    title: terms.metadata.title,
+    description: terms.metadata.description,
+    metadataBase: new URL(terms.metadata.metadataBase),
+    applicationName: terms.metadata.applicationName,
+    creator: terms.metadata.creator,
+    keywords: terms.metadata.keywords ?? terms.metadata.title,
+    authors: [{ name: terms.metadata.creator }],
+    robots: terms.metadata.robots,
+    openGraph: {
+      title: terms.metadata.title,
+      description: terms.metadata.description,
+      images: urlFor(terms.metadata.image).url(),
+      type: "website",
+      locale: "en_IN",
+    },
+    alternates: {
+      canonical: new URL(terms.metadata.metadataBase),
+    },
+  };
+}
 
 const TermsAndConditions: NextPage = async () => {
   const terms: SanityTypes.Terms = await getTermsAndConditions();
@@ -37,14 +41,18 @@ const TermsAndConditions: NextPage = async () => {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: "Terms and Conditions",
-    url: "https://www.the-daily-blogs.com/terms-and-conditions",
-    description:
-      "Review the terms and conditions for using The Daily Blogs, a wellness and lifestyle platform promoting fitness, mental health, and personal growth. Understand your rights and responsibilities.",
+    url: SITE.url + "/terms-and-conditions",
+    description: `Terms and Conditions for accessing and using ${SITE.name}. Read about our content use policy, disclaimers, user responsibilities, and website usage rules.`,
     inLanguage: "en",
+    publisher: {
+      "@type": "Organization",
+      name: SITE.name,
+      url: SITE.url,
+    },
     isPartOf: {
       "@type": "WebSite",
-      name: "The Daily Blogs",
-      url: "https://www.the-daily-blogs.com",
+      name: SITE.name,
+      url: SITE.url,
     },
   };
 
@@ -74,6 +82,11 @@ const TermsAndConditions: NextPage = async () => {
           >
             <PortableText value={terms.description} />
           </article>
+
+          <div className="w-full" data-uia="updation-date">
+            <strong>Last Updated:</strong>{" "}
+            {dayjs(terms.updatedAt).format("MMMM D, YYYY")}
+          </div>
         </section>
       </div>
     </>

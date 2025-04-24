@@ -10,6 +10,7 @@ import homepage from './homepage'
 import navlink from './navlink'
 import footer from './footer'
 import modal from './modal'
+import metadata from './metadata'
 
 export const schemaTypes = [
   author,
@@ -24,4 +25,5 @@ export const schemaTypes = [
   navlink,
   footer,
   modal,
+  metadata,
 ]

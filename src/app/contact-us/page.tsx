@@ -1,11 +1,11 @@
 import * as React from "react";
 import type { Metadata, NextPage } from "next";
 import { PortableText } from "@portabletext/react";
-import { WithContext } from "schema-dts";
+import { Organization, WithContext } from "schema-dts";
 import { FaEnvelopesBulk } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
-import type { TContactPage, SanityTypes } from "@/@types";
+import type { SanityTypes } from "@/@types";
 import { getContactUsDetails, getProfile } from "@/lib/utils";
 import ContactForm from "@/components/shared/contact-form";
 import StructuredData from "@/components/structured-data";
@@ -13,48 +13,47 @@ import Jumbotron from "@/components/shared/jumbotron";
 import { urlFor } from "@/lib/sanity";
 import { SITE } from "@/lib/data";
 
-export const metadata: Metadata = {
-  title:
-    "Contact Us | The Daily Blogs – Let's Connect on Wellness, Lifestyle & Growth",
-  metadataBase: new URL(SITE.url),
-  description:
-    "Get in touch with The Daily Blogs for questions, collaborations, or feedback related to fitness, lifestyle, mental health, and personal growth. We're here to connect with you!",
-  keywords: [
-    "contact The Daily Blogs",
-    "fitness blog contact",
-    "mental health blog",
-    "lifestyle blogger email",
-    "collaborate wellness blog",
-    "personal growth blog",
-  ],
-  robots: "index,noarchive,follow,max-image-preview:large",
-  alternates: {
-    canonical: new URL(SITE.url + "/contact-us"),
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const contact: SanityTypes.Contact = await getContactUsDetails();
+
+  return {
+    title: contact.metadata.title,
+    description: contact.metadata.description,
+    metadataBase: new URL(contact.metadata.metadataBase),
+    applicationName: contact.metadata.applicationName,
+    creator: contact.metadata.creator,
+    keywords: contact.metadata.keywords ?? contact.metadata.title,
+    authors: [{ name: contact.metadata.creator }],
+    robots: contact.metadata.robots,
+    openGraph: {
+      title: contact.metadata.title,
+      description: contact.metadata.description,
+      images: urlFor(contact.metadata.image).url(),
+      type: "website",
+      locale: "en_IN",
+    },
+    alternates: {
+      canonical: new URL(contact.metadata.metadataBase),
+    },
+  };
+}
 
 const ContactUs: NextPage = async () => {
   const profile: SanityTypes.Profile = await getProfile();
   const contact: SanityTypes.Contact = await getContactUsDetails();
 
-  const schemaData: WithContext<TContactPage> = {
+  const schemaData: WithContext<Organization> = {
     "@context": "https://schema.org",
-    "@type": "ContactPage",
-    name: "Contact Us",
-    url: "https://www.the-daily-blogs.com/contact-us",
-    description:
-      "Get in touch with The Daily Blogs for questions, collaborations, or feedback related to fitness, lifestyle, mental health, and personal growth.",
-    inLanguage: "en",
-    isPartOf: {
-      "@type": "WebSite",
-      name: "The Daily Blogs",
-      url: "https://www.the-daily-blogs.com",
-    },
+    "@type": "Organization",
+    name: SITE.name,
+    url: SITE.url + "/contact-us",
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Customer Support",
+      url: SITE.url + "/contact-us",
       email: SITE.email,
-      url: "https://www.the-daily-blogs.com/contact-us",
+      areaServed: "Worldwide",
+      availableLanguage: ["English"],
     },
   };
 

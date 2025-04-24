@@ -19,19 +19,12 @@ const ff = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "The Daily Blogs",
-    template: "%s — The Daily Blogs",
+    default: "Modern Living Lifestyle",
+    template: "Modern Living Lifestyle | %s",
   },
   metadataBase: new URL(SITE.url),
   description:
-    "Explore our latest blog posts on topics that matter. Stay updated with insights, tips, and stories tailored for curious minds and passionate creators.",
-  keywords: [
-    "the daily blogs",
-    "thedailyblogs",
-    "blog",
-    "blog post",
-    "article",
-  ],
+    "Welcome to Modern Living Lifestyle – explore powerful insights on fitness, lifestyle, mental health, self-transformation, well-being, and sociology. Discover content that inspires growth, positivity, and purpose.",
   alternates: {
     canonical: new URL(SITE.url),
   },
@@ -42,7 +35,7 @@ export const revalidate = 3600; // revalidate at most every hour
 const RootLayout: NextPage<NextTypes.Layout> = ({ children }) => {
   return (
     <html lang="en">
-      <body className={`${ff.className} antialiased`}>
+      <body className={ff.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

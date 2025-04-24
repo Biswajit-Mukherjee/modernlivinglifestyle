@@ -7,6 +7,10 @@ import Logo from "@/components/shared/logo";
 const Footer: React.FC = async () => {
   const foo = await getFooterDetails();
 
+  // Get current year
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
   return (
     <footer
       aria-label={foo.label}
@@ -42,7 +46,9 @@ const Footer: React.FC = async () => {
         aria-label="copyright-message"
         className="text-foreground/80 text-sm font-normal leading-normal text-center antialiased mt-6 mx-auto mb-4"
       >
-        &copy; {foo.copyrightMsg}
+        <span>
+          &copy; Copyright {currentYear}. {foo.copyrightMsg}
+        </span>
         <span className="sr-only">{foo.copyrightMsg}</span>
       </div>
     </footer>

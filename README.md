@@ -1,1 +1,1 @@
-# The Daily Blogs
+# Modern Living Lifestyle

@@ -20,5 +20,13 @@ export default {
       of: [{type: 'block'}],
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'pageMeta',
+      title: 'Page Metadata',
+      type: 'reference',
+      to: [{type: 'metadata'}],
+      description: 'This will be page metadata for SEO',
+      validation: (rule) => rule.required(),
+    }),
   ],
 }

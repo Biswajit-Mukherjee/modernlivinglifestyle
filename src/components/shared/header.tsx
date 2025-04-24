@@ -14,7 +14,7 @@ const Header: React.FC = async () => {
     <header className="w-full h-20 px-2.5 sm:px-5 fixed top-0 left-0 z-50 flex items-center shadow-lg bg-background">
       <NavMenuMobile nav={hdr} />
       <Link href="/" className="align-middle" sr-only="Home Page">
-        <Logo className="cursor-pointer" />
+        <Logo className="cursor-pointer" hidden />
       </Link>
       <NavMenu
         className="hidden md:flex items-center px-20"

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { SanityImageAssetDocument } from "next-sanity";
-import type { ContactPage } from "schema-dts";
+import type { Robots } from "next/dist/lib/metadata/types/metadata-types";
 
 // Next types
 export namespace NextTypes {
@@ -13,6 +13,17 @@ export namespace NextTypes {
 
 // Sanity types
 export namespace SanityTypes {
+  export type Metadata = Readonly<{
+    title: string;
+    description: string;
+    metadataBase: string;
+    robots: string | Robots | null | undefined;
+    image: SanityImageAssetDocument;
+    keywords: string[] | null | undefined;
+    applicationName: string;
+    creator: string;
+  }>;
+
   export type Blog = Readonly<{
     id: string;
     slug: string;
@@ -56,26 +67,30 @@ export namespace SanityTypes {
     description: never;
     createdAt: Date;
     updatedAt: Date;
+    metadata: Metadata;
   }>;
 
   export type Terms = Readonly<{
     title: string;
     description: never;
     createdAt: Date;
+    updatedAt: Date;
+    metadata: Metadata;
   }>;
 
   export type Disclaimer = Readonly<{
     title: string;
     description: never;
     createdAt: Date;
+    metadata: Metadata;
   }>;
 
   export type AboutSite = Readonly<{
     title: string;
     description: never;
-    largeDescription: never;
     hero: SanityImageAssetDocument;
     about: SanityImageAssetDocument;
+    metadata: Metadata;
   }>;
 
   export type Contact = Readonly<{
@@ -83,25 +98,16 @@ export namespace SanityTypes {
     title: string;
     description: never;
     modal: { name: string; title: string; body: never };
+    metadata: Metadata;
   }>;
 
   export type Homepage = Readonly<{
     title: string;
     image: SanityImageAssetDocument;
     intro: never;
+    metadata: Metadata;
   }>;
 }
-
-// Schema data types
-export type TContactPage = ContactPage &
-  Readonly<{
-    contactPoint: {
-      "@type": string;
-      contactType: string;
-      email: string;
-      url: string;
-    };
-  }>;
 
 // Navlink types
 export type Navlinks = Readonly<{ label: string; navlinks: Navlink[] }>;

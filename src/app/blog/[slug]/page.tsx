@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     applicationName: SITE.name,
     creator: SITE.creator,
-    metadataBase: new URL(SITE.url),
+    metadataBase: new URL(`${SITE.url}/blog/${blog.slug}`),
     title: blog.title,
     description: blog.description,
     openGraph: {
