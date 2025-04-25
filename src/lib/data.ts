@@ -6,7 +6,7 @@ export const SITE = {
   creatorImage:
     "https://cdn.sanity.io/images/d2lxyr39/production/87bac1f9e738d5680def7642cab92890e51cde8b-4000x6000.jpg?w=2000&fit=max&auto=format",
   url: "https://www.modernlivinglifestyle.com",
-  email: "workingprojects@yahoo.com",
+  email: "contact@modernlivinglifestyle.com",
 };
 export const SENDER =
   "Modern Living Lifestyle <no-reply@modernlivinglifestyle.com>";
