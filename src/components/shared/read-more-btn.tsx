@@ -18,6 +18,7 @@ const ReadMoreButton: React.FC<Props> = ({ title, url }) => {
     <Button
       className="p-0"
       variant="link"
+      role="link"
       aria-label={`Read more about ${title}`}
       onClick={handleClick}
     >
