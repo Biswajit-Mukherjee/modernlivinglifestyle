@@ -18,7 +18,7 @@ const ReadMoreButton: React.FC<Props> = ({ title, url }) => {
     <Button
       className="p-0"
       variant="link"
-      aria-label={title}
+      aria-label={`Read more about ${title}`}
       onClick={handleClick}
     >
       <div className="w-full flex flex-row items-center gap-1 text-primary hover:underline hover:underline-primary active:underline-primary underline-offset-4 transition-all duration-200 font-semibold antialiased">

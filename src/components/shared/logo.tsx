@@ -6,7 +6,7 @@ type Props = Readonly<{ className?: string; hidden?: boolean }>;
 
 const Logo: React.FC<Props> = ({ className = "", hidden = false }) => {
   return (
-    <span aria-label="site-logo" className={cn(className)}>
+    <span className={cn(className)} data-uia="logo">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="272"

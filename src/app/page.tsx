@@ -1,5 +1,4 @@
 import * as React from "react";
-import Link from "next/link";
 import type { Metadata, NextPage } from "next";
 import { PortableText } from "@portabletext/react";
 import { WebSite, WithContext } from "schema-dts";
@@ -123,17 +122,6 @@ const Home: NextPage = async () => {
           </div>
 
           <NewsLetterForm />
-
-          <div
-            aria-label="privacy-text"
-            className="w-full mt-5 text-center align-middle text-sm leading-normal font-normal antialiased text-muted-foreground"
-          >
-            We care about your data. Read our{" "}
-            <strong className="hover:underline active:underline underline-offset-2">
-              <Link href="/privacy">Privacy policy</Link>
-            </strong>
-            .
-          </div>
         </section>
       </main>
     </>

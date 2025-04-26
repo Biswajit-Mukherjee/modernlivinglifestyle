@@ -33,7 +33,7 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  /** Set Security Headers */
+  /** Set Headers */
   async headers() {
     return [
       {

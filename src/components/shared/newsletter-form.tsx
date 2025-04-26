@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { z } from "zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaCheckCircle } from "react-icons/fa";
@@ -52,10 +53,7 @@ const NewsLetterForm: React.FC = () => {
   }
 
   return (
-    <div
-      className="w-full max-w-xl mx-auto grid gap-2.5"
-      data-uia="form-container"
-    >
+    <div className="w-full max-w-xl mx-auto" data-uia="form-container">
       {message && (
         <div className="w-full flex items-center justify-center">
           <div className="w-full align-middle leading-normal font-normal text-sm antialiased text-green-500 flex flex-row items-center gap-1.5 flex-1">
@@ -107,6 +105,21 @@ const NewsLetterForm: React.FC = () => {
           </div>
         </form>
       </Form>
+
+      <div
+        aria-label="privacy-text"
+        className="w-full mt-5 text-center align-middle text-sm leading-normal font-normal antialiased text-muted-foreground"
+      >
+        By subscribing, you agree with our{" "}
+        <strong className="hover:underline active:underline underline-offset-2">
+          <Link href="/terms-and-conditions">Terms</Link>
+        </strong>{" "}
+        and{" "}
+        <strong className="hover:underline active:underline underline-offset-2">
+          <Link href="/privacy">Privacy policy</Link>
+        </strong>
+        .
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import type { Metadata, NextPage } from "next";
 import { BlogPosting, CollectionPage, WithContext } from "schema-dts";
 import { redirect } from "next/navigation";
@@ -9,8 +10,10 @@ import PageNav from "@/components/ui/page-nav";
 import Loader from "@/components/shared/loader";
 import FilteredBlogs from "@/components/shared/filtered-blogs";
 import BlogsNotFound from "@/components/shared/blogs-not-found";
-import { SITE } from "@/lib/data";
 import StructuredData from "@/components/structured-data";
+import { SITE } from "@/lib/data";
+
+const BLOGS_END_MSG = "No more blogs to display :(";
 
 export const metadata: Metadata = {
   title:
@@ -126,8 +129,21 @@ const Blogs: NextPage<Props> = async ({ searchParams }) => {
             </React.Suspense>
           ) : (
             !query && (
-              <div className="w-full min-h-[240px] max-w-xs m-auto text-muted-foreground text-center">
-                {"No more blogs to display :("}
+              <div className="w-full max-w-sm min-h-[240px] m-auto text-muted-foreground text-center">
+                <div className="w-full mx-auto mt-0 mb-5 text-5xl">
+                  ¯\_(ツ)_/¯
+                </div>
+                <div className="w-full text-center mx-auto my-5 text-base font-normal leading-normal antialiased">
+                  {BLOGS_END_MSG}
+                </div>
+                <Link
+                  role="button"
+                  aria-label="blogs-first-page-link-cta"
+                  className="block w-full bg-primary text-white rounded-lg p-4 mt-6 mx-auto mb-0"
+                  href="/blogs?page=1"
+                >
+                  Go to first page
+                </Link>
               </div>
             )
           )}

@@ -61,19 +61,10 @@
 
 @layer base {
   * {
-    @apply border-border;
-  }
-  body {
-    @apply w-full max-w-full bg-background text-foreground;
-  }
-}
-
-@layer base {
-  * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground leading-normal select-none antialiased;
+    @apply w-full max-w-full bg-background text-foreground leading-normal select-none antialiased;
   }
 }
 

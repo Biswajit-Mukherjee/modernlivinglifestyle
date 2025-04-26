@@ -13,7 +13,12 @@ const Header: React.FC = async () => {
   return (
     <header className="w-full h-20 px-2.5 sm:px-5 fixed top-0 left-0 z-50 flex items-center shadow-lg bg-background">
       <NavMenuMobile nav={hdr} />
-      <Link href="/" className="align-middle" sr-only="Home Page">
+      <Link
+        aria-label="Go to Home Page"
+        className="align-middle"
+        href="/"
+        sr-only="Home Page"
+      >
         <Logo className="cursor-pointer" hidden />
       </Link>
       <NavMenu

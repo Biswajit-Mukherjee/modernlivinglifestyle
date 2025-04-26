@@ -35,7 +35,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
                 src={urlFor(blog.image).url()}
                 placeholder="blur"
                 alt={blog.title}
-                quality={60}
+                quality={40}
                 fill
               />
             </AspectRatio>

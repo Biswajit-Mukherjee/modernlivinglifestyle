@@ -12,6 +12,8 @@ const Jumbotron: React.FC<Props> = ({ title, image }) => {
     <div className="w-full h-[240px] sm:h-[360px] md:h-[480px] relative mx-auto">
       <Image
         className="w-full object-contain bg-center"
+        fetchPriority="high"
+        loading="eager"
         src={image}
         alt={title}
         priority
