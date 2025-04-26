@@ -219,7 +219,7 @@ export async function getContactUsDetails() {
       hero,
       title,
       description,
-      modal -> { name, title, body },
+      modal -> { name, title, subtitle, body },
       "metadata":pageMeta->{
         title,
         description,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import * as React from "react";
@@ -6,17 +5,19 @@ import { FaCheckCircle } from "react-icons/fa";
 import { PortableText } from "@portabletext/react";
 import { Button } from "@/components/ui/button";
 
-type Props = Readonly<{
+export type ContactSuccessModalProps = Readonly<{
   label: string;
   title: string;
-  body: any;
+  subtitle: string;
+  body: never;
   onClose: () => void;
 }>;
 
-const Modal: React.FC<Props> = ({
-  label = "modal",
-  title = "Modal Title",
-  body = "Modal Body",
+export const ContactSuccessModal: React.FC<ContactSuccessModalProps> = ({
+  label,
+  title,
+  subtitle,
+  body,
   onClose,
   ...props
 }) => {
@@ -30,9 +31,8 @@ const Modal: React.FC<Props> = ({
       />
 
       <div
-        aria-label={label}
+        aria-label={label.toLowerCase().replaceAll(" ", "-")}
         className="w-full max-w-xl min-h-80 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1000] shadow-2xl m-auto bg-background text-foreground flex flex-col"
-        data-uia={label}
         {...props}
       >
         <div
@@ -56,6 +56,14 @@ const Modal: React.FC<Props> = ({
           >
             {title}
           </h1>
+
+          <div
+            aria-label="modal-subtitle"
+            className="w-full flex-1 mt-4 text-center text-muted-foreground text-base font-normal leading-normal antialiased"
+          >
+            {subtitle}
+          </div>
+
           <div
             aria-label="modal-body"
             className="w-full flex-1 mt-4 text-center text-muted-foreground text-base font-normal leading-normal antialiased"
@@ -81,5 +89,3 @@ const Modal: React.FC<Props> = ({
     </>
   );
 };
-
-export default Modal;

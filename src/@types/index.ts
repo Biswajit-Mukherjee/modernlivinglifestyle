@@ -97,7 +97,7 @@ export namespace SanityTypes {
     hero: SanityImageAssetDocument;
     title: string;
     description: never;
-    modal: { name: string; title: string; body: never };
+    modal: { name: string; title: string; subtitle: string; body: never };
     metadata: Metadata;
   }>;
 

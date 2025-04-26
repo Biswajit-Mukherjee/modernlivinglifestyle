@@ -22,6 +22,13 @@ export default {
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'subtitle',
+      title: 'Modal subtitle',
+      description: 'This will be the popup modal subtitle',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'body',
       title: 'Modal body',
       description: 'This will be the popup modal body',

@@ -25,11 +25,13 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { ContactFormSchema } from "@/lib/schema";
 import { sendEmail } from "@/actions/contact-form-action";
-import Modal from "@/components/shared/modal";
+import { ContactSuccessModal } from "@/components/shared/modal";
 
 export type ContactFormInputs = z.infer<typeof ContactFormSchema>;
 
-type Props = Readonly<{ modal: { name: string; title: string; body: never } }>;
+type Props = Readonly<{
+  modal: { name: string; title: string; subtitle: string; body: never };
+}>;
 
 const ContactForm: React.FC<Props> = ({ modal }) => {
   const [submitting, setSubmitting] = React.useState<boolean>(false);
@@ -267,9 +269,10 @@ const ContactForm: React.FC<Props> = ({ modal }) => {
 
       <div data-uia="form-success">
         {showModal && (
-          <Modal
-            label={modal.name.toLowerCase().replaceAll(" ", "-")}
+          <ContactSuccessModal
+            label={modal.name}
             title={modal.title}
+            subtitle={modal.subtitle}
             body={modal.body}
             onClose={handleModalClose}
           />
