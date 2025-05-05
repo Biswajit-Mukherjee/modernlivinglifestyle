@@ -119,7 +119,7 @@ const BlogDetails: NextPage<Props> = async ({
 
       <ReportView slug={blog.slug} />
 
-      <main className="w-full h-full bg-muted/50 dark:bg-muted flex flex-col p-4 items-center justify-center">
+      <main className="w-full h-full app-bg flex flex-col p-4 items-center justify-center">
         <MaxWidthWrapper className="min-h-screen mt-10 mb-0 select-none">
           <section aria-label="back-nav" className="w-full mt-0 mx-auto mb-10">
             <BackButton />

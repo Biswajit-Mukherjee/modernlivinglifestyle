@@ -13,8 +13,17 @@ export const sanity = createClient({
 });
 
 const config = {
-  siteUrl: "https://www.the-daily-blogs.com" || "http://localhost:3000", // Your domain
+  siteUrl: process.env.SITE_URL ?? "https://www.modernlivinglifestyle.com", // Your domain
   generateRobotsTxt: true, // Generate robots.txt file
+  robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: "/onboarding",
+      },
+    ],
+  },
   sitemapSize: 7000, // Split sitemap into multiple files if you have many URLs
   outDir: "./public", // The output directory for your sitemap files
   changefreq: "weekly",

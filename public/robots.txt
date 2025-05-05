@@ -1,9 +1,10 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /onboarding
 
 # Host
-Host: https://www.the-daily-blogs.com
+Host: https://www.modernlivinglifestyle.com
 
 # Sitemaps
-Sitemap: https://www.the-daily-blogs.com/sitemap.xml
+Sitemap: https://www.modernlivinglifestyle.com/sitemap.xml

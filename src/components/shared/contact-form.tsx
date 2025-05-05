@@ -15,16 +15,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ContactFormSchema } from "@/lib/schema";
-import { sendEmail } from "@/actions/contact-form-action";
+import { sendInvoices } from "@/actions/contact-form-action";
 import { ContactSuccessModal } from "@/components/shared/modal";
 
 export type ContactFormInputs = z.infer<typeof ContactFormSchema>;
@@ -46,7 +39,6 @@ const ContactForm: React.FC<Props> = ({ modal }) => {
       email: "",
       message: "",
       subject: "",
-      subscriber: "",
     },
   });
 
@@ -54,7 +46,7 @@ const ContactForm: React.FC<Props> = ({ modal }) => {
   const onSubmit: SubmitHandler<ContactFormInputs> = async (data) => {
     setSubmitting(true);
 
-    const result = await sendEmail(data);
+    const result = await sendInvoices(data);
 
     if (result?.success) {
       // Set success modal
@@ -80,6 +72,7 @@ const ContactForm: React.FC<Props> = ({ modal }) => {
         <div className="w-full mt-5" data-uia="form-container">
           <Form {...form}>
             <form
+              noValidate
               onSubmit={form.handleSubmit(onSubmit)}
               className="w-full max-w-[540px] mx-auto grid gap-5"
             >
@@ -194,52 +187,6 @@ const ContactForm: React.FC<Props> = ({ modal }) => {
                       />
                     </FormControl>
                     <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Optional field */}
-              <FormField
-                control={form.control}
-                name="subscriber"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col flex-1">
-                    <FormLabel className="text-foreground text-base font-normal antialiased">
-                      Are you a subscriber on my youtube? (optional)
-                    </FormLabel>
-
-                    <Select
-                      disabled={submitting}
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl className="bg-background w-full min-h-12 shadow-none flex-1 rounded-sm focus-visible:ring-2 ring-offset-2 text-base">
-                        <SelectTrigger className="text-sm font-normal antialiased">
-                          <SelectValue
-                            aria-label="default-value"
-                            placeholder="Please choose an option"
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-
-                      <SelectContent aria-label="subscriber-select">
-                        <SelectItem
-                          className="w-full my-2 text-sm font-normal antialiased cursor-pointer"
-                          aria-label="option — yes"
-                          value="yes"
-                        >
-                          Yes
-                        </SelectItem>
-
-                        <SelectItem
-                          className="w-full my-2 text-sm font-normal antialiased cursor-pointer"
-                          aria-label="option — no"
-                          value="no"
-                        >
-                          No
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
                   </FormItem>
                 )}
               />

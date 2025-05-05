@@ -76,7 +76,7 @@ const About: NextPage = async () => {
     <>
       <StructuredData data={schemaData} />
 
-      <div className="w-full min-h-screen bg-muted/50 dark:bg-muted grid gap-10">
+      <div className="w-full min-h-screen app-bg grid gap-10">
         <section className="w-full mt-10 mx-auto mb-0">
           <Jumbotron
             title={aboutSite.title}

@@ -6,11 +6,22 @@ const IMG_SRC =
 
 const Logo: React.FC = () => {
   return (
-    <Img
-      alt="logo"
-      style={{ width: 320, margin: "auto" }}
-      src={IMG_SRC}
-    />
+    <div
+      style={{ width: "100%", position: "relative", boxSizing: "border-box" }}
+    >
+      <Img
+        alt="logo"
+        style={{
+          width: 320,
+          margin: "auto",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
+        }}
+        src={IMG_SRC}
+      />
+    </div>
   );
 };
 

@@ -1,21 +1,23 @@
 /** This is a email to the user for the contact form
- * Type — acknowledgement email
+ *  Type — acknowledgement email
  */
 
 import * as React from "react";
 import {
   Html,
-  Tailwind,
   Body,
   Container,
   Heading,
   Section,
   Text,
   Hr,
+  Head,
+  Preview,
 } from "@react-email/components";
 import Logo from "./components/logo";
+import Footer from "./components/footer";
 
-type Props = Readonly<{
+interface ContactFormUserEmailProps {
   invoiceId: string;
   firstName: string;
   lastName: string;
@@ -23,103 +25,249 @@ type Props = Readonly<{
   subject: string;
   message: string;
   generatedOn: string;
-}>;
+}
 
-const ContactFormUserEmail: React.FC<Props> = ({
-  invoiceId = "VK4Y70Y4T4264730RVYT",
-  firstName = "John",
-  lastName = "Doe",
-  email = "doe.john@mail.com",
-  subject = "Test",
-  message = "This is a test message!",
-  generatedOn = "2025-07-03",
-}) => {
+export default function ContactFormUserEmail({
+  invoiceId,
+  firstName,
+  lastName,
+  email,
+  subject,
+  message,
+  generatedOn,
+}: ContactFormUserEmailProps) {
   const name = firstName + " " + lastName;
 
   return (
-    <Html lang="en">
-      <Tailwind>
-        <Body className="w-full h-full box-border m-0 p-0 font-sans leading-normal antialiased">
-          <Container className="w-full box-border p-1">
-            <Section className="w-full mx-auto my-4 p-4 border border-solid border-gray-300 bg-gray-100">
-              <Heading className="m-0 text-sm text-left leading-normal font-bold antialiased">
-                Invoice Number
+    <Html style={htmlStyles} lang="en">
+      <Head />
+      <Preview>Invoice generated as on {generatedOn}</Preview>
+      <Body style={bodyStyles}>
+        <Container style={containerStyles}>
+          <Section style={logoSectionStyles}>
+            <div style={logoContainerStyles}>
+              <Logo />
+            </div>
+          </Section>
+
+          <Container style={wrapperSectionStyles}>
+            <Section style={invoiceSectionStyles}>
+              <Heading style={invoiceHeadingStyles}>Invoice Number</Heading>
+
+              <Text style={invoiceTextStyles}>{invoiceId}</Text>
+            </Section>
+
+            <Section style={baseStyles}>
+              <Heading style={headingStyles}>
+                Invoice generated as on {generatedOn}
               </Heading>
-
-              <Text className="m-0 text-base text-left leading-normal font-medium text-gray-600 antialiased">
-                {invoiceId}
-              </Text>
             </Section>
 
-            <Section className="w-full my-10 mx-auto">
-              <div className="flex items-center justify-center">
-                <Logo />
-              </div>
-            </Section>
-
-            <Section className="w-full mx-0 my-10 mb-0">
-              <Text className="text-sm font-normal leading-normal antialiased text-left mt-10 mx-0 mb-0">
+            <Section style={textSectionStyles}>
+              <Text style={{ ...textStyles, margin: "24px 0 30px" }}>
                 Dear {name},
               </Text>
 
-              <Text className="text-sm font-normal leading-normal antialiased text-left mt-2 mx-0 mb-0">
+              <Text style={{ ...textStyles, margin: "8px 0 16px" }}>
                 Thank you for reaching out to us.
               </Text>
 
-              <Text className="text-sm font-normal leading-normal antialiased text-left mt-1 mx-0 mb-6">
-                We have received your request
-                and will get back to you shortly. Please find below the invoice
-                details regarding the same as generated on {generatedOn}.
+              <Text style={{ ...textStyles, margin: "4px 0 24px" }}>
+                We have received your request and will get back to you shortly.
+                Please find below the invoice details regarding the same.
               </Text>
             </Section>
 
-            <Section className="w-full box-border mb-5 rounded-2xl bg-[#fb7a00]/10 bg-[radial-gradient(circle_at_bottom_right,#fb7a00_0%,transparent_60%)] p-4">
-              <Heading className="m-0 text-lg text-left font-semibold antialiased text-[#964f4b]">
+            <Section style={invoiceDetailsSectionStyles}>
+              <Heading style={invoiceDetailsSectionHeadingStyles}>
                 Invoice Details
               </Heading>
 
-              <Hr className="mt-2" style={{ borderColor: "#fb7a00" }} />
+              <Hr style={invoiceDetailsSectionHrStyles} />
 
-              <Container className="my-6 text-sm text-left font-bold leading-none text-gray-900">
-                <strong className="font-bold antialiased">Name : </strong>
-                <span className="font-normal antialiased">{name}</span>
+              <Container style={invoiceDetailsSectionContainerStyles}>
+                <div style={invoiceDetailsSectionContainerDivStyles}>
+                  <strong style={{ fontWeight: 700 }}>Name : </strong>
+                  <span style={{ fontWeight: 400 }}>{name}</span>
+                </div>
               </Container>
 
-              <Container className="my-6 text-sm text-left font-bold leading-none text-gray-900">
-                <strong className="font-bold antialiased">Email : </strong>
-                <span className="font-normal antialiased">{email}</span>
+              <Container style={invoiceDetailsSectionContainerStyles}>
+                <div style={invoiceDetailsSectionContainerDivStyles}>
+                  <strong style={{ fontWeight: 700 }}>Email : </strong>
+                  <span style={{ fontWeight: 400 }}>{email}</span>
+                </div>
               </Container>
 
-              <Container className="my-6 text-sm text-left font-bold leading-none text-gray-900">
-                <strong className="font-bold antialiased">Subject : </strong>
-                <span className="font-normal antialiased">{subject}</span>
+              <Container style={invoiceDetailsSectionContainerStyles}>
+                <div style={invoiceDetailsSectionContainerDivStyles}>
+                  <strong style={{ fontWeight: 700 }}>Subject : </strong>
+                  <span style={{ fontWeight: 400 }}>{subject}</span>
+                </div>
               </Container>
 
-              <Container className="my-6 text-sm text-left font-bold leading-none text-gray-900">
-                <strong className="font-bold antialiased">Message : </strong>
-                <div className="font-normal antialiased mt-2.5">{message}</div>
+              <Container style={invoiceDetailsSectionContainerStyles}>
+                <div style={invoiceDetailsSectionContainerDivStyles}>
+                  <strong style={{ fontWeight: 700 }}>Message : </strong>
+                  <span style={{ fontWeight: 400, margin: "10px 0 0" }}>
+                    {message}
+                  </span>
+                </div>
               </Container>
             </Section>
 
-            <Section className="w-full mt-10 mx-0 mb-0 box-border">
-              <Text className="text-xs font-normal leading-normal text-gray-600 antialiased">
-                Note: This is a system generated email. Please do not reply.
+            <Section style={ignoreTextSectionStyles}>
+              <Text style={ignoreTextStyles}>
+                This is a system generated email. Please do not reply.
               </Text>
             </Section>
 
-            <Section className="w-full mt-10 box-border text-center">
-              <Text className="text-xs font-normal text-gray-600 antialiased m-0 box-border">
-                Copyright &copy; 2025 &nbsp; | &nbsp; The Daily Blogs
-              </Text>
-              <Text className="text-xs font-normal text-blue-600 antialiased mt-4 mx-0 mb-8 box-border">
-                All rights reserved
-              </Text>
-            </Section>
+            <Footer />
           </Container>
-        </Body>
-      </Tailwind>
+        </Container>
+      </Body>
     </Html>
   );
+}
+
+ContactFormUserEmail.PreviewProps = {
+  invoiceId: "VK4Y70Y4T4264730RVYT",
+  firstName: "John",
+  lastName: "Doe",
+  email: "doe.john@mail.com",
+  subject: "Test",
+  message: "This is a test message!",
+  generatedOn: "Mar 7, 2025",
+} satisfies ContactFormUserEmailProps;
+
+const baseStyles: React.CSSProperties = {
+  boxSizing: "border-box",
+  width: "100%",
 };
 
-export default ContactFormUserEmail;
+const noSpaceStyles: React.CSSProperties = {
+  margin: 0,
+  padding: 0,
+};
+
+const htmlStyles: React.CSSProperties = {
+  ...noSpaceStyles,
+  ...baseStyles,
+};
+
+const bodyStyles: React.CSSProperties = {
+  height: "100%",
+  lineHeight: 1.5,
+  fontFamily:
+    'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+  ...noSpaceStyles,
+  ...baseStyles,
+};
+
+const containerStyles: React.CSSProperties = {
+  padding: "10px",
+  ...baseStyles,
+};
+
+const logoSectionStyles: React.CSSProperties = {
+  margin: "40px auto",
+  ...baseStyles,
+};
+
+const logoContainerStyles: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  ...baseStyles,
+};
+
+const wrapperSectionStyles: React.CSSProperties = {
+  width: "100%",
+  margin: "10px 0 0",
+};
+
+const headingStyles: React.CSSProperties = {
+  fontSize: "20px",
+  fontWeight: 700,
+  lineHeight: 1.5,
+  margin: "24px 0 32px",
+  padding: 0,
+  ...baseStyles,
+};
+
+const textStyles: React.CSSProperties = {
+  fontSize: "14px",
+  fontWeight: 400,
+  lineHeight: 1.5,
+  ...baseStyles,
+};
+
+const invoiceSectionStyles: React.CSSProperties = {
+  border: "1px solid #d1d5db",
+  margin: "80px auto 16px",
+  ...baseStyles,
+};
+
+const invoiceHeadingStyles: React.CSSProperties = {
+  ...textStyles,
+  fontWeight: 700,
+  margin: 0,
+  padding: "8px 16px",
+};
+
+const invoiceTextStyles: React.CSSProperties = {
+  fontSize: "16px",
+  fontWeight: 500,
+  lineHeight: 1.5,
+  color: "#4b5563",
+  padding: "8px 16px",
+  margin: 0,
+};
+
+const textSectionStyles: React.CSSProperties = {
+  ...noSpaceStyles,
+  ...baseStyles,
+};
+
+const invoiceDetailsSectionStyles: React.CSSProperties = {
+  margin: "4px 0 20px",
+  ...baseStyles,
+};
+
+const invoiceDetailsSectionHeadingStyles: React.CSSProperties = {
+  margin: 0,
+  padding: "10px 0",
+  fontSize: "18px",
+  fontWeight: 600,
+  ...baseStyles,
+};
+
+const invoiceDetailsSectionHrStyles: React.CSSProperties = {
+  display: "block",
+  width: "100%",
+  borderColor: "#ddd",
+  ...noSpaceStyles,
+  ...baseStyles,
+};
+
+const invoiceDetailsSectionContainerStyles: React.CSSProperties = {
+  margin: "10px 0",
+  fontSize: "14px",
+  lineHeight: 1.5,
+  ...baseStyles,
+};
+
+const invoiceDetailsSectionContainerDivStyles: React.CSSProperties = {
+  padding: "8px 0",
+  ...baseStyles,
+};
+
+const ignoreTextSectionStyles: React.CSSProperties = {
+  margin: "40px 0",
+  ...baseStyles,
+};
+
+const ignoreTextStyles: React.CSSProperties = {
+  color: "#4b5563",
+  ...textStyles,
+};

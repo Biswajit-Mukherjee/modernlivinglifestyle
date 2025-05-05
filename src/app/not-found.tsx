@@ -21,7 +21,7 @@ const NotFound: NextPage = () => {
     <>
       <StructuredData data={schemaData} />
 
-      <main className="w-full bg-muted/50 dark:bg-muted text-foreground flex items-center justify-center">
+      <main className="w-full app-bg text-foreground flex items-center justify-center">
         <section className="w-full max-w-5xl mx-auto mt-12 mb-24 grid gap-5 items-center justify-center">
           <div
             data-uia="bg-image"

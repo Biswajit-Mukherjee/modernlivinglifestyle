@@ -8,6 +8,28 @@ export const NewsletterFormSchema = z.object({
     .email({ message: "Please provide a valid email address." }),
 });
 
+/** Subscription form schema */
+export const SubscriptionFormSchema = z.object({
+  firstName: z
+    .string()
+    .nonempty("First name is required.")
+    .min(3, {
+      message: "First name must be at least 3 characters.",
+    })
+    .max(60, {
+      message: "First name must not exceed 60 characters.",
+    }),
+  lastName: z
+    .string()
+    .nonempty("Last name is required.")
+    .min(3, {
+      message: "Last name must be at least 3 characters.",
+    })
+    .max(60, {
+      message: "Last name must not exceed 60 characters.",
+    }),
+});
+
 /** Contact form schema */
 export const ContactFormSchema = z.object({
   firstName: z
@@ -50,5 +72,4 @@ export const ContactFormSchema = z.object({
     .max(60, {
       message: "Message must not exceed 60 characters.",
     }),
-  subscriber: z.string().optional(),
 });

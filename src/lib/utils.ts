@@ -10,12 +10,37 @@ export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
-/** Generate nanoid random number */
-export function generateID() {
-  const nanoid = customAlphabet("1234567890qKORTVWXYZ", 20);
-  const id = nanoid();
+/** Get base url */
+export function getBaseUrl(): string {
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? process.env.SITE_URL_DEV!
+      : process.env.SITE_URL!;
+  return baseUrl;
+}
 
+/** Generate nanoid random number */
+export function generateID(): string {
+  const customNanoid = customAlphabet("1234567890qKORTVWXYZ", 20);
+  const id = customNanoid();
   return id;
+}
+
+/** Generate nanoid otp */
+export function generateOtp(): string {
+  const customNanoid = customAlphabet("1234567890", 6);
+  const otp = customNanoid();
+  return otp;
+}
+
+/** Generate nanoid token */
+export function generateToken(): string {
+  const customNanoid = customAlphabet(
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-",
+    36
+  );
+  const token = customNanoid();
+  return token;
 }
 
 /** Fetch most recent blogs from Sanity in descending order of creation date */

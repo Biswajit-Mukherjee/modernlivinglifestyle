@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
@@ -28,6 +29,9 @@ const NavMenuMobile: React.FC<Props> = ({ nav }) => {
         </DrawerTrigger>
         <DrawerContent className="w-full max-w-[280px] h-full rounded-none">
           <DrawerTitle className="sr-only">Mobile Navmenu</DrawerTitle>
+          <DrawerDescription className="sr-only">
+            Sidebar for header menu links in mobile view
+          </DrawerDescription>
           <NavMenu
             listClassName="w-full px-5 py-10 grid gap-6"
             navlinks={nav.navlinks}

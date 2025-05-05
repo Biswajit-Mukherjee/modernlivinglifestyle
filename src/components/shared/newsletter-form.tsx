@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import { z } from "zod";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FaCheckCircle } from "react-icons/fa";
 import { Button, LoadingButton } from "@/components/ui/button";
 import { NewsletterFormSchema } from "@/lib/schema";
 import {
@@ -16,18 +16,26 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createNewSubscriber } from "@/actions/subscribe-action";
+import SubscriptionAgreement from "@/components/shared/subscription-agreement";
+import { sendConfirmationEmail } from "@/actions/email-action";
+import { generateToken } from "@/lib/utils";
+import {
+  checkIfUserExists,
+  checkIfUserIsSubscribed,
+  checkIfUserIsVerified,
+  getUserName,
+} from "@/actions/user-action";
+import { SENDER } from "@/lib/data";
 
-const NewsLetterForm: React.FC = () => {
+export type NewsletterFormInputs = z.infer<typeof NewsletterFormSchema>;
+
+type Props = Readonly<{ onSubscribeInit: () => void }>;
+
+const NewsLetterForm: React.FC<Props> = ({ onSubscribeInit }) => {
   const [submitting, setSubmitting] = React.useState<boolean>(false);
-  const [message, setMessage] = React.useState<string | null>(null);
 
-  /** Reset success message after 5s */
-  React.useEffect(() => {
-    setTimeout(() => {
-      // Reset success message
-      setMessage(null);
-    }, 5000);
-  }, [message]);
+  const router = useRouter();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof NewsletterFormSchema>>({
@@ -36,37 +44,80 @@ const NewsLetterForm: React.FC = () => {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof NewsletterFormSchema>) {
+  const onSubmit: SubmitHandler<NewsletterFormInputs> = async (data) => {
+    // Set form status
     setSubmitting(true);
-    setTimeout(() => {
-      console.log(values);
 
-      // Reset form values
-      form.reset();
+    // Check if user exists
+    const existingUserId = await checkIfUserExists(data.email);
 
-      // Reset form status
-      setSubmitting(false);
+    if (existingUserId) {
+      // Check if user is verified
+      const verifiedUserId = await checkIfUserIsVerified(existingUserId);
 
-      // Set success message
-      setMessage("You're now subscribed to our newsletter!");
-    }, 5000);
-  }
+      if (verifiedUserId) {
+        const userIsSubscribed = await checkIfUserIsSubscribed(verifiedUserId);
+
+        if (userIsSubscribed) {
+          toast.success("You're already subscribed to our newsletter");
+        } else {
+          const user = await getUserName(verifiedUserId as string);
+
+          if (user && user.firstName && user.lastName) {
+            router.push(
+              `/onboarding/details?uid=${user?.id}&firstName=${user?.firstName}&lastName=${user?.lastName}`
+            );
+          } else {
+            router.push(`/onboarding/details?uid=${user?.id}`);
+          }
+        }
+      } else {
+        // Generate token
+        const token = generateToken();
+
+        // Send confirmation email
+        const res = await sendConfirmationEmail({
+          from: SENDER,
+          to: [data.email],
+          subject: "Verify your email",
+          token,
+        });
+
+        if (res?.success) {
+          // Pass entered email to parent
+          onSubscribeInit();
+        } else {
+          // Set error
+          toast.error(res?.message as string);
+        }
+      }
+    } else {
+      const res = await createNewSubscriber(data);
+
+      if (res?.success) {
+        // Pass entered email to parent
+        onSubscribeInit();
+      } else {
+        // Set error
+        toast.error(res?.message as string);
+      }
+    }
+
+    // Reset form values
+    form.reset();
+
+    // Reset form status
+    setSubmitting(false);
+  };
 
   return (
     <div className="w-full max-w-xl mx-auto" data-uia="form-container">
-      {message && (
-        <div className="w-full flex items-center justify-center">
-          <div className="w-full align-middle leading-normal font-normal text-sm antialiased text-green-500 flex flex-row items-center gap-1.5 flex-1">
-            <span data-uia="icon">
-              <FaCheckCircle size={20} />
-            </span>
-            <span data-uia="message">{message}</span>
-          </div>
-        </div>
-      )}
-
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full grid">
+        <form
+          noValidate
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full grid"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -83,7 +134,7 @@ const NewsLetterForm: React.FC = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage className="text-sm font-normal leading-normal antialiased" />
+                <FormMessage className="text-sm leading-normal font-normal antialiased text-destructive" />
               </FormItem>
             )}
           />
@@ -106,20 +157,7 @@ const NewsLetterForm: React.FC = () => {
         </form>
       </Form>
 
-      <div
-        aria-label="privacy-text"
-        className="w-full mt-5 text-center align-middle text-sm leading-normal font-normal antialiased text-muted-foreground"
-      >
-        By subscribing, you agree with our{" "}
-        <strong className="hover:underline active:underline underline-offset-2">
-          <Link href="/terms-and-conditions">Terms</Link>
-        </strong>{" "}
-        and{" "}
-        <strong className="hover:underline active:underline underline-offset-2">
-          <Link href="/privacy">Privacy policy</Link>
-        </strong>
-        .
-      </div>
+      <SubscriptionAgreement />
     </div>
   );
 };

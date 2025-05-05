@@ -4,17 +4,13 @@ import { PortableText } from "@portabletext/react";
 import { WebSite, WithContext } from "schema-dts";
 import { getHomepageDetails, getMostRecentBlogs } from "@/lib/utils";
 import type { SanityTypes } from "@/@types";
-import BlogCard from "@/components/shared/blog-card";
 import Jumbotron from "@/components/shared/jumbotron";
 import StructuredData from "@/components/structured-data";
-import AllBlogsButton from "@/components/shared/all-blogs-btn";
-import NewsLetterForm from "@/components/shared/newsletter-form";
+import BlogsContainer from "@/components/shared/blogs-container";
+import UserOnboarding from "@/components/shared/user-onboarding";
 import { Separator } from "@/components/ui/separator";
 import { urlFor } from "@/lib/sanity";
 import { SITE } from "@/lib/data";
-
-/** Runtime */
-export const runtime = "edge";
 
 export async function generateMetadata(): Promise<Metadata> {
   const home: SanityTypes.Homepage = await getHomepageDetails();
@@ -67,40 +63,25 @@ const Home: NextPage = async () => {
     <>
       <StructuredData data={schemaData} />
 
-      <main className="w-full min-h-screen bg-muted/50 dark:bg-muted grid gap-10 px-4 py-10">
+      <main className="w-full min-h-screen app-bg grid gap-10 px-4 py-10">
         <section className="w-full mt-0 mx-auto mb-0">
           <Jumbotron title={home.title} image={urlFor(home.image).url()} />
         </section>
 
         <section
-          data-uia="blogs-container"
-          className="w-full mt-8 mx-auto mb-6"
+          data-uia="intro-container"
+          className="w-full max-w-5xl mt-8 mx-auto mb-0"
         >
-          <div className="w-full max-w-5xl text-center mt-0 mx-auto mb-16 text-foreground prose dark:prose-invert text-base leading-normal antialiased">
+          <div className="w-full text-center mt-0 mx-auto mb-16 text-foreground prose dark:prose-invert text-base leading-normal antialiased">
             <PortableText value={home.intro} />
-          </div>
-
-          <div className="w-full max-w-xs mt-0 mx-auto mb-8 relative">
-            <div className="w-fit mx-auto">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl text-center font-bold text-nowrap antialiased">
-                Most recent blogs
-              </h2>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-5 w-full max-w-5xl mx-auto">
-            {blogs.length &&
-              blogs.map((blog: SanityTypes.Blog) => (
-                <BlogCard key={blog.id} blog={blog} />
-              ))}
           </div>
         </section>
 
         <section
-          data-uia="load-all-blogs"
-          className="w-full max-w-5xl mx-auto my-0 flex items-center justify-center"
+          data-uia="blogs-container"
+          className="w-full max-w-5xl mt-0 mx-auto mb-4"
         >
-          <AllBlogsButton />
+          <BlogsContainer blogs={blogs} />
         </section>
 
         <Separator className="w-full max-w-5xl mx-auto bg-muted-foreground/10 dark:bg-muted-foreground/25" />
@@ -121,7 +102,7 @@ const Home: NextPage = async () => {
             what&apos;s new, recently published blogs and other important stuff.
           </div>
 
-          <NewsLetterForm />
+          <UserOnboarding />
         </section>
       </main>
     </>

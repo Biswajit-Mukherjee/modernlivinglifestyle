@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import * as React from "react";
 import Link from "next/link";
 import type { Metadata, NextPage } from "next";
@@ -49,7 +51,6 @@ export const metadata: Metadata = {
 };
 
 type Props = Readonly<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchParams?: Promise<any>;
 }>;
 
@@ -106,7 +107,7 @@ const Blogs: NextPage<Props> = async ({ searchParams }) => {
     <>
       <StructuredData data={schemaData} />
 
-      <main className="w-full min-h-screen bg-muted/50 dark:bg-muted grid gap-10 px-4 py-10">
+      <main className="w-full min-h-screen app-bg grid gap-10 px-4 py-10">
         <div className="w-full max-w-[440px] mx-auto" data-uia="search">
           <SearchBox searchQuery={query} />
         </div>

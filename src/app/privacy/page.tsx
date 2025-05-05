@@ -55,7 +55,7 @@ const Privacy: NextPage = async () => {
     <>
       <StructuredData data={schemaData} />
 
-      <div className="w-full min-h-screen bg-muted/50 dark:bg-muted grid gap-10">
+      <div className="w-full min-h-screen app-bg grid gap-10">
         <section
           className="w-full max-w-5xl mt-10 mx-auto mb-5 px-4 py-10 relative"
           data-layout="section"

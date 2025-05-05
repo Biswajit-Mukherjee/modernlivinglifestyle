@@ -78,6 +78,11 @@ strong {
   @apply text-foreground !important;
 }
 
+/* App */
+.app-bg {
+  @apply bg-muted;
+}
+
 /* Spinner */
 .loader {
   width: 64px;
@@ -109,4 +114,21 @@ strong {
 /* Footer */
 .foo a {
   @apply font-normal text-muted-foreground;
+}
+
+/* Modal */
+.modal-wrapper {
+  @apply w-full max-w-xl min-h-80;
+  @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1000];
+  @apply flex flex-col;
+  @apply box-border;
+}
+
+.modal {
+  @apply w-full h-full min-h-80;
+  @apply shadow-2xl;
+  @apply m-auto;
+  @apply bg-background text-foreground;
+  @apply flex flex-col flex-1;
+  @apply box-border;
 }

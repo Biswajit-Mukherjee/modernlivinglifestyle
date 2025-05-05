@@ -30,12 +30,13 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
           >
             <AspectRatio ratio={16 / 9}>
               <Image
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="w-full h-full object-cover bg-top aspect-auto"
                 blurDataURL={urlFor(blog.image).url()}
                 src={urlFor(blog.image).url()}
                 placeholder="blur"
                 alt={blog.title}
-                quality={40}
+                quality={20}
                 fill
               />
             </AspectRatio>
