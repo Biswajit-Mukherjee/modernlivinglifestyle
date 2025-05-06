@@ -1,20 +1,18 @@
 import * as React from "react";
-import { SanityTypes } from "@/@types";
+import type { SanityTypes } from "@/@types";
 import BlogCard from "@/components/shared/blog-card";
 import AllBlogsButton from "@/components/shared/all-blogs-btn";
+import { getMostRecentBlogs } from "@/lib/utils";
 
-/** Runtime */
-export const runtime = "edge";
+const BlogsContainer: React.FC = async () => {
+  const blogs: SanityTypes.Blog[] = await getMostRecentBlogs();
 
-type Props = Readonly<{ blogs: SanityTypes.Blog[] }>;
-
-const BlogsContainer: React.FC<Props> = ({ blogs }) => {
   return (
     <div>
       <div className="w-full max-w-xs mt-0 mx-auto mb-8 relative">
         <div className="w-fit mx-auto">
           <h2 className="text-2xl sm:text-3xl md:text-4xl text-center font-bold text-nowrap antialiased">
-            You might like
+            Popular right now
           </h2>
         </div>
       </div>

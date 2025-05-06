@@ -2,7 +2,7 @@ import * as React from "react";
 import type { Metadata, NextPage } from "next";
 import { PortableText } from "@portabletext/react";
 import { WebSite, WithContext } from "schema-dts";
-import { getHomepageDetails, getMostRecentBlogs } from "@/lib/utils";
+import { getHomepageDetails } from "@/lib/utils";
 import type { SanityTypes } from "@/@types";
 import Jumbotron from "@/components/shared/jumbotron";
 import StructuredData from "@/components/structured-data";
@@ -39,7 +39,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const Home: NextPage = async () => {
   const home: SanityTypes.Homepage = await getHomepageDetails();
-  const blogs: SanityTypes.Blog[] = await getMostRecentBlogs();
 
   const schemaData: WithContext<WebSite> = {
     "@context": "https://schema.org",
@@ -81,7 +80,7 @@ const Home: NextPage = async () => {
           data-uia="blogs-container"
           className="w-full max-w-5xl mt-0 mx-auto mb-4"
         >
-          <BlogsContainer blogs={blogs} />
+          <BlogsContainer />
         </section>
 
         <Separator className="w-full max-w-5xl mx-auto bg-muted-foreground/10 dark:bg-muted-foreground/25" />

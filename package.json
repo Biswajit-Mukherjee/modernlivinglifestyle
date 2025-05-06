@@ -1,5 +1,5 @@
 {
-  "name": "the-daily-blogs",
+  "name": "modern-living-lifestyle",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "email": "email dev --dir src/emails --port 3600",
-    "prisma-studio": "npx prisma studio --port 5555"
+    "prisma": "npx prisma studio --port 5555"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
