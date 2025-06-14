@@ -59,6 +59,7 @@ const Blogs: NextPage<Props> = async ({ searchParams }) => {
   const query = params ? params?.query : "";
   const page = params ? params?.page : "1";
   const startIndex = params ? params?.startIndex : "0";
+  const endIndex = params ? params?.endIndex : "6";
 
   if (!params.page) {
     redirect("/blogs?page=1");
@@ -100,7 +101,8 @@ const Blogs: NextPage<Props> = async ({ searchParams }) => {
 
   const filteredBlogs: SanityTypes.Blog[] = await getBlogsByQuery(
     query,
-    startIndex
+    startIndex,
+    endIndex
   );
 
   return (

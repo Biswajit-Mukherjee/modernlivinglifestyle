@@ -26,26 +26,28 @@ const PageNav: React.FC<Props> = ({
   const handlePrevPageClick = async () => {
     const prevPage = +page - 1;
     const prevIndex = +startIndex - NUMBER_OF_BLOGS_PER_PAGE;
+    const endIndex = prevIndex + NUMBER_OF_BLOGS_PER_PAGE;
 
     if (query) {
       router.push(
-        `/blogs?query=${query}&page=${prevPage}&startIndex=${prevIndex.toString()}`
+        `/blogs?query=${query}&page=${prevPage}&startIndex=${prevIndex.toString()}&endIndex=${endIndex.toString()}`
       );
     } else {
-      router.push(`/blogs?page=${prevPage}&startIndex=${prevIndex.toString()}`);
+      router.push(`/blogs?page=${prevPage}&startIndex=${prevIndex.toString()}&endIndex=${endIndex.toString()}`);
     }
   };
 
   const handleNextPageClick = async () => {
     const nextPage = +page + 1;
     const nextIndex = +startIndex + NUMBER_OF_BLOGS_PER_PAGE;
+    const endIndex = nextIndex + NUMBER_OF_BLOGS_PER_PAGE;
 
     if (query) {
       router.push(
-        `/blogs?query=${query}&page=${nextPage}&startIndex=${nextIndex.toString()}`
+        `/blogs?query=${query}&page=${nextPage}&startIndex=${nextIndex.toString()}&endIndex=${endIndex.toString()}`
       );
     } else {
-      router.push(`/blogs?page=${nextPage}&startIndex=${nextIndex.toString()}`);
+      router.push(`/blogs?page=${nextPage}&startIndex=${nextIndex.toString()}&endIndex=${endIndex.toString()}`);
     }
   };
 

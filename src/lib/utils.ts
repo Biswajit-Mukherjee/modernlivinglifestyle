@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { customAlphabet } from "nanoid";
 import { sanityClient } from "./sanity";
 import { Footer, Navlinks, type SanityTypes } from "@/@types";
-import { MOST_RECENT_BLOGS, NUMBER_OF_BLOGS_PER_PAGE } from "./data";
+import { MOST_RECENT_BLOGS } from "./data";
 
 /** Merge tailwind classes */
 export function cn(...inputs: ClassValue[]): string {
@@ -112,14 +112,13 @@ export async function getProfile() {
 /** Fetch blogs by search query */
 export async function getBlogsByQuery(
   searchQuery: string,
-  startIndex: number = 0
+  startIndex: number = 0,
+  endIndex: number = 6
 ): Promise<SanityTypes.Blog[]> {
-  const endIndex = startIndex + NUMBER_OF_BLOGS_PER_PAGE;
-
   // GROQ query to fetch blogs that contains the queried string
   const query = searchQuery
     ? `
-    *[_type == 'blog' && (title match "*${searchQuery}*" || description match "*${searchQuery}*")] | order(_createdAt desc) [${startIndex}...${endIndex}] {
+    *[_type == 'blog' && (title match "*${searchQuery}*" || description match "*${searchQuery}*")] | order(_createdAt desc) [${+startIndex}...${+endIndex}] {
     "id": _id,
     "createdAt": _createdAt,
     "slug": slug.current,
@@ -128,7 +127,7 @@ export async function getBlogsByQuery(
     image
   }`
     : `
-    *[_type == 'blog'] | order(_createdAt desc) [${startIndex}...${endIndex}] {
+    *[_type == 'blog'] | order(_createdAt desc) [${+startIndex}...${+endIndex}] {
     "id": _id,
     "createdAt": _createdAt,
     "slug": slug.current,
