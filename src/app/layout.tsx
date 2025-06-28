@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import { Bounce, ToastContainer } from "react-toastify";
 import type { NextTypes } from "@/@types";
 import { ThemeProvider } from "@/providers/theme-provider";
+import AdsenseWrapper from "@/components/adsense-wrapper";
 import Header from "@/components/shared/header";
 import Footer from "@/components/shared/footer";
 import { SITE } from "@/lib/data";
@@ -61,6 +62,7 @@ const RootLayout: NextPage<NextTypes.Layout> = ({ children }) => {
         />
         <Analytics />
         <SpeedInsights />
+        <AdsenseWrapper />
       </body>
     </html>
   );
