@@ -12,7 +12,6 @@ const ContentSecurityPolicy = `
   font-src 'self' https://fonts.gstatic.com;
   connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://va.vercel-scripts.com https://www.google-analytics.com https://region1.google-analytics.com https://ep1.adtrafficquality.google;
   frame-src https://www.youtube.com https://player.vimeo.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google.com;
-  fenced-frame-src '';
   object-src 'none';
   base-uri 'self';
   form-action 'self';
