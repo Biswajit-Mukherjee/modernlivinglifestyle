@@ -11,8 +11,8 @@ const ContentSecurityPolicy = `
   img-src 'self' data: blob: https://cdn.sanity.io https://images.unsplash.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://ep1.adtrafficquality.google;
   font-src 'self' https://fonts.gstatic.com;
   connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://va.vercel-scripts.com https://www.google-analytics.com https://region1.google-analytics.com https://ep1.adtrafficquality.google;
+  fenced-frame-src https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://googleads.g.doubleclick.net https://www.google.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google;
   frame-src https://www.youtube.com https://player.vimeo.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google.com;
-  fenced-frame-src https://pagead2.googlesyndication.com https://tpc.googlesyndication.com;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
