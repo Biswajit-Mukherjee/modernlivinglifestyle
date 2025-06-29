@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import Script from "next/script";
 import type { Metadata, NextPage } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -31,11 +32,26 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 3600; // revalidate at most every hour
+export const revalidate = 3600; // revalidate all paths at most every hour
 
 const RootLayout: NextPage<NextTypes.Layout> = ({ children }) => {
+  const ADSENSE_SCRIPT = process.env.NEXT_PUBLIC_ADSENSE_URL!;
+  const AD_CLIENT = process.env.NEXT_PUBLIC_AD_CLIENT!;
+
   return (
     <html lang="en">
+      <head>
+        {/* Load the adsense script and metadata */}
+        <Script
+          async
+          id="adsense-script"
+          src={ADSENSE_SCRIPT}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+        <meta name="google-adsense-account" content={AD_CLIENT}></meta>
+      </head>
+
       <body className={ff.className}>
         <ThemeProvider
           attribute="class"

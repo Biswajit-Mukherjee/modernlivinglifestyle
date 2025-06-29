@@ -1,21 +1,23 @@
 "use client";
 
-import * as React from "react";
-import Script from "next/script";
+import { useEffect } from "react";
 
 const AdsenseWrapper: React.FC = () => {
-  const ADSENSE_SCRIPT = process.env.NEXT_PUBLIC_ADSENSE_URL!;
-  const AD_CLIENT = process.env.NEXT_PUBLIC_AD_CLIENT!;
   const AD_SLOT = process.env.NEXT_PUBLIC_AD_SLOT!;
+  const AD_CLIENT = process.env.NEXT_PUBLIC_AD_CLIENT!;
+
+  useEffect(() => {
+    try {
+      if (typeof window !== "undefined" && window.adsbygoogle) {
+        window.adsbygoogle.push({});
+      }
+    } catch (e) {
+      console.error("Adsense error", e);
+    }
+  }, []);
 
   return (
-    <>
-      <Script
-        async
-        src={ADSENSE_SCRIPT}
-        crossOrigin="anonymous"
-        strategy="afterInteractive"
-      />
+    <div style={{ overflow: "hidden" }}>
       {/* Modern Living Lifestyle Ad Unit */}
       <ins
         className="adsbygoogle"
@@ -25,8 +27,7 @@ const AdsenseWrapper: React.FC = () => {
         data-ad-format="auto"
         data-full-width-responsive="true"
       ></ins>
-      <Script id="">(adsbygoogle = window.adsbygoogle || []).push({});</Script>
-    </>
+    </div>
   );
 };
 
