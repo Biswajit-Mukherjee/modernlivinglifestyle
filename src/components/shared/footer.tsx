@@ -13,6 +13,7 @@ const Footer: React.FC = async () => {
 
   return (
     <footer
+      id="appFooter"
       aria-label={foo.label}
       className="foo w-full min-h-40 p-6 flex flex-col gap-8 bg-background border-t border-border"
     >
