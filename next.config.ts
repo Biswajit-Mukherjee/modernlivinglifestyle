@@ -6,7 +6,7 @@ const IS_DEV = process.env.NODE_ENV === "development";
 /** CSP Policy */
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' ${IS_DEV ? "'unsafe-eval' http://localhost:3000/api/auth/* https://cdn.jsdelivr.net/npm/@scalar/api-reference https://va.vercel-scripts.com/v1/script.debug.js https://va.vercel-scripts.com/v1/speed-insights/script.debug.js" : ""} https://va.vercel-scripts.com/v1/speed-insights/script.js https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com;
+  script-src 'self' 'unsafe-inline' ${IS_DEV ? "'unsafe-eval' http://localhost:3000/api/auth/* https://cdn.jsdelivr.net/npm/@scalar/api-reference https://va.vercel-scripts.com/v1/script.debug.js https://va.vercel-scripts.com/v1/speed-insights/script.debug.js" : ""} https://va.vercel-scripts.com/v1/speed-insights/script.js https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   img-src 'self' data: blob: https://cdn.sanity.io https://images.unsplash.com https://www.google-analytics.com;
   font-src 'self' https://fonts.gstatic.com;
