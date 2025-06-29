@@ -6,11 +6,11 @@ const IS_DEV = process.env.NODE_ENV === "development";
 /** CSP Policy */
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' ${IS_DEV ? "'unsafe-eval' http://localhost:3000/api/auth/* https://cdn.jsdelivr.net/npm/@scalar/api-reference https://va.vercel-scripts.com/v1/script.debug.js https://va.vercel-scripts.com/v1/speed-insights/script.debug.js" : "https://www.modernlivinglifestyle.com/_vercel/insights/script.js https://www.modernlivinglifestyle.com/_vercel/speed-insights/script.js"} https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1807889359282558;
+  script-src 'self' 'unsafe-inline' ${IS_DEV ? "'unsafe-eval' http://localhost:3000/api/auth/* https://cdn.jsdelivr.net/npm/@scalar/api-reference https://va.vercel-scripts.com/v1/script.debug.js https://va.vercel-scripts.com/v1/speed-insights/script.debug.js" : ""} https://va.vercel-scripts.com/v1/speed-insights/script.js https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   img-src 'self' data: blob: https://cdn.sanity.io https://images.unsplash.com https://www.google-analytics.com;
   font-src 'self' https://fonts.gstatic.com;
-  connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://www.google-analytics.com https://region1.google-analytics.com;
+  connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://va.vercel-scripts.com https://www.google-analytics.com https://region1.google-analytics.com;
   frame-src https://www.youtube.com https://player.vimeo.com;
   object-src 'none';
   base-uri 'self';
