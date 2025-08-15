@@ -2,8 +2,8 @@ import * as React from "react";
 import type { Metadata, NextPage } from "next";
 import { PortableText } from "@portabletext/react";
 import { Organization, WithContext } from "schema-dts";
-import { FaEnvelopesBulk } from "react-icons/fa6";
-import { FaFacebook } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import type { SanityTypes } from "@/@types";
 import { getContactUsDetails, getProfile } from "@/lib/utils";
@@ -12,6 +12,7 @@ import StructuredData from "@/components/structured-data";
 import Jumbotron from "@/components/shared/jumbotron";
 import { urlFor } from "@/lib/sanity";
 import { SITE } from "@/lib/data";
+import Link from "next/link";
 
 export async function generateMetadata(): Promise<Metadata> {
   const contact: SanityTypes.Contact = await getContactUsDetails();
@@ -88,40 +89,55 @@ const ContactUs: NextPage = async () => {
             data-layout="container"
             className="flex flex-col md:flex-row items-center justify-center gap-10 relative z-10"
           >
-            <div className="w-full sm:w-[340px] h-fit aspect-square flex flex-1 flex-col gap-3 p-10 shadow-xl bg-background text-card-foreground rounded-2xl overflow-hidden">
-              <div className="w-20 h-20 aspect-square rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                <FaEnvelopesBulk size={40} />
-              </div>
-              <h3 className="text-2xl font-bold leading-normal antialiased text-foreground">
-                Email Us
-              </h3>
-              <div className="text-base leading-normal antialiased text-muted-foreground">
-                {profile.email}
-              </div>
+            <div className="w-full sm:w-[360px] h-fit aspect-square flex flex-1 flex-col p-10 shadow-xl bg-background text-card-foreground rounded-2xl overflow-hidden">
+              <Link
+                className="flex flex-col gap-5 flex-1"
+                href={`mailto:${profile.email}`}
+              >
+                <div className="w-20 h-20 aspect-square rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                  <MdEmail size={40} />
+                </div>
+                <h3 className="text-2xl font-extrabold leading-normal antialiased text-foreground">
+                  Email Us
+                </h3>
+                <div className="text-base leading-normal antialiased text-muted-foreground">
+                  {profile.email}
+                </div>
+              </Link>
             </div>
 
-            <div className="w-full sm:w-[340px] h-fit aspect-square flex flex-1 flex-col gap-3 p-10 shadow-xl bg-background text-card-foreground rounded-2xl overflow-hidden">
-              <div className="w-20 h-20 aspect-square rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                <FaFacebook size={40} />
-              </div>
-              <h3 className="text-2xl font-bold leading-normal antialiased text-foreground">
-                Connect on Facebook
-              </h3>
-              <div className="text-base leading-normal antialiased text-muted-foreground">
-                {profile.facebook.split("facebook.com/")[1]}
-              </div>
+            <div className="w-full sm:w-[360px] h-fit aspect-square flex flex-1 flex-col p-10 shadow-xl bg-background text-card-foreground rounded-2xl overflow-hidden">
+              <Link
+                className="flex flex-col gap-5 flex-1"
+                href={profile.instagram}
+              >
+                <div className="w-20 h-20 aspect-square rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                  <FaInstagram size={40} />
+                </div>
+                <h3 className="text-2xl font-extrabold leading-normal antialiased text-foreground">
+                  Connect on Instagram
+                </h3>
+                <div className="text-base leading-normal antialiased text-muted-foreground">
+                  {profile.instagram.split("instagram.com/")[1]}
+                </div>
+              </Link>
             </div>
 
-            <div className="w-full sm:w-[340px] h-fit aspect-square flex flex-1 flex-col gap-3 p-10 shadow-xl bg-background text-card-foreground rounded-2xl overflow-hidden">
-              <div className="w-20 h-20 aspect-square rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                <FaYoutube size={40} />
-              </div>
-              <h3 className="text-2xl font-bold leading-normal antialiased text-foreground">
-                Subscribe on YouTube
-              </h3>
-              <div className="text-base leading-normal antialiased text-muted-foreground">
-                {profile.youtube.split("youtube.com/")[1]}
-              </div>
+            <div className="w-full sm:w-[360px] h-fit aspect-square flex flex-1 flex-col p-10 shadow-xl bg-background text-card-foreground rounded-2xl overflow-hidden">
+              <Link
+                className="flex flex-col gap-5 flex-1"
+                href={profile.youtube}
+              >
+                <div className="w-20 h-20 aspect-square rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                  <FaYoutube size={40} />
+                </div>
+                <h3 className="text-2xl font-extrabold leading-normal antialiased text-foreground">
+                  Subscribe on YouTube
+                </h3>
+                <div className="text-base leading-normal antialiased text-muted-foreground">
+                  {profile.youtube.split("youtube.com/")[1]}
+                </div>
+              </Link>
             </div>
           </div>
         </section>

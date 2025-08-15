@@ -57,7 +57,7 @@ const Privacy: NextPage = async () => {
 
       <div className="w-full min-h-screen app-bg grid gap-10">
         <section
-          className="w-full max-w-5xl mt-10 mx-auto mb-5 px-4 py-10 relative"
+          className="w-full max-w-5xl mx-auto my-10 px-4 py-10 relative"
           data-layout="section"
         >
           <div className="w-full flex flex-col md:flex-row md:items-center justify-between gap-5">

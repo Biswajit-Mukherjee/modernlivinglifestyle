@@ -37,6 +37,7 @@ export namespace SanityTypes {
     numberOfCharacters: number;
     estimatedWordCount: number;
     estimatedReadingTimeInMins: number;
+    ytkey: string;
   }>;
 
   export type Profile = Readonly<{
@@ -45,7 +46,7 @@ export namespace SanityTypes {
     description: never;
     image: SanityImageAssetDocument;
     email: string;
-    facebook: string;
+    instagram: string;
     youtube: string;
   }>;
 

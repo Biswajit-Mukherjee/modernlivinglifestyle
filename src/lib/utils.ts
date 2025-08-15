@@ -79,6 +79,7 @@ export async function getBlog(slug: string): Promise<SanityTypes.BlogDetails> {
       content,
       title,
       image,
+      ytkey,
       author -> { name, image },
       seo,
       "numberOfCharacters": length(pt::text(content)),
@@ -101,7 +102,7 @@ export async function getProfile() {
       description,
       image,
       email,
-      facebook,
+      instagram,
       youtube
     }`;
 

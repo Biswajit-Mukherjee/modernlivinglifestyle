@@ -20,6 +20,7 @@ import StructuredData from "@/components/structured-data";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import BackButton from "@/components/shared/back-btn";
 import { ReportView } from "@/components/shared/view";
+import { YouTubePlayer } from "@/components/shared/youtube-player";
 
 type Props = Readonly<{ params: Promise<any> }>;
 
@@ -121,13 +122,17 @@ const BlogDetails: NextPage<Props> = async ({
 
       <main className="w-full h-full app-bg flex flex-col p-4 items-center justify-center">
         <MaxWidthWrapper className="min-h-screen mt-10 mb-0 select-none">
-          <section aria-label="back-nav" className="w-full mt-0 mx-auto mb-10">
+          <section
+            aria-label="back-nav"
+            className="w-full mt-0 mx-auto mb-10"
+            data-uia="back-btn"
+          >
             <BackButton />
           </section>
 
           <section
-            data-uia="blog-date"
             className="w-full mt-4 flex items-center gap-2.5"
+            data-uia="blog-date"
           >
             <CalendarIcon className="text-primary" size={30} />
             <div className="w-full flex-1">
@@ -140,7 +145,7 @@ const BlogDetails: NextPage<Props> = async ({
             </div>
           </section>
 
-          <section className="w-full">
+          <section className="w-full" data-uia="blog-header">
             <h1
               data-uia="blog-title"
               className="w-full mt-6 text-wrap text-2xl sm:text-3xl md:text-4xl text-foreground font-black leading-normal antialiased"
@@ -198,18 +203,7 @@ const BlogDetails: NextPage<Props> = async ({
             </div>
           </section>
 
-          <section
-            className="px-0 py-6 text-muted-foreground/80 leading-normal antialiased lowercase flex flex-row flex-wrap items-center justify-center gap-3"
-            data-uia="blog-keywords"
-          >
-            {blog.seo?.map((keyword, index) => (
-              <span
-                key={index}
-              >{`#${keyword.trim().toLowerCase().replaceAll(" ", "")}`}</span>
-            ))}
-          </section>
-
-          <section className="w-full">
+          <section className="w-full" data-uia="blog-body">
             <div
               data-uia="blog-description"
               className="w-full mt-6 text-center text-muted-foreground text-lg font-medium leading-normal antialiased"
@@ -219,11 +213,22 @@ const BlogDetails: NextPage<Props> = async ({
 
             <article
               data-uia="blog-content"
-              className="w-full max-w-full mt-16 mx-0 mb-24 prose dark:prose-invert text-foreground leading-normal antialiased"
+              className="w-full max-w-full mt-16 mx-0 mb-20 prose dark:prose-invert text-foreground leading-normal antialiased"
             >
               <PortableText value={blog.content} />
             </article>
           </section>
+
+          {blog.ytkey && (
+            <section className="w-full" data-uia="blog-multimedia">
+              <div
+                className="flex items-center justify-center mt-2 mx-auto mb-20"
+                data-uia="youtube-player-container"
+              >
+                <YouTubePlayer id={blog.id} videoId={blog.ytkey} />
+              </div>
+            </section>
+          )}
         </MaxWidthWrapper>
       </main>
     </>

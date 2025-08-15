@@ -33,7 +33,9 @@ const PageNav: React.FC<Props> = ({
         `/blogs?query=${query}&page=${prevPage}&startIndex=${prevIndex.toString()}&endIndex=${endIndex.toString()}`
       );
     } else {
-      router.push(`/blogs?page=${prevPage}&startIndex=${prevIndex.toString()}&endIndex=${endIndex.toString()}`);
+      router.push(
+        `/blogs?page=${prevPage}&startIndex=${prevIndex.toString()}&endIndex=${endIndex.toString()}`
+      );
     }
   };
 
@@ -47,14 +49,16 @@ const PageNav: React.FC<Props> = ({
         `/blogs?query=${query}&page=${nextPage}&startIndex=${nextIndex.toString()}&endIndex=${endIndex.toString()}`
       );
     } else {
-      router.push(`/blogs?page=${nextPage}&startIndex=${nextIndex.toString()}&endIndex=${endIndex.toString()}`);
+      router.push(
+        `/blogs?page=${nextPage}&startIndex=${nextIndex.toString()}&endIndex=${endIndex.toString()}`
+      );
     }
   };
 
   return (
     <div
-      className="w-full flex items-center justify-center gap-6 mx-auto my-4"
-      data-uia="navigation-container"
+      className="w-full max-w-sm flex items-center justify-between mx-auto mt-0 mb-20"
+      data-uia="blogs-navigation"
     >
       <Button
         onClick={handlePrevPageClick}
@@ -65,9 +69,13 @@ const PageNav: React.FC<Props> = ({
         <ChevronLeft />
         <span>Prev</span>
       </Button>
-      <span className="text-muted-foreground antialiased">
-        Page <strong className="text-foreground antialiased">{page}</strong>
-      </span>
+
+      <div className="mx-6">
+        <span className="text-muted-foreground antialiased">
+          Page <strong className="text-foreground antialiased">{page}</strong>
+        </span>
+      </div>
+
       <Button
         onClick={handleNextPageClick}
         aria-label="next-page-btn"

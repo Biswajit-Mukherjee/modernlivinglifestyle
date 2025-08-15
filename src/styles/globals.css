@@ -113,7 +113,15 @@ strong {
 
 /* Footer */
 .foo a {
-  @apply font-normal text-muted-foreground;
+  @apply font-normal leading-normal antialiased;
+}
+
+.foo *[data-uia="footer-contact"] a {
+  @apply text-card-foreground/60 hover:text-foreground active:text-foreground;
+}
+
+.foo *[data-uia="footer-links"] a {
+  @apply text-muted-foreground hover:text-primary active:text-primary;
 }
 
 /* Modal */

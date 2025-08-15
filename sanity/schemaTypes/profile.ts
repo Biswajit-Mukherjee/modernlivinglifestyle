@@ -41,10 +41,10 @@ export default {
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'facebook',
-      title: 'Facebook',
+      name: 'instagram',
+      title: 'Instagram',
       type: 'url',
-      description: 'Your facebook profile',
+      description: 'Your instagram profile',
       validation: (rule) => rule.required(),
     }),
     defineField({

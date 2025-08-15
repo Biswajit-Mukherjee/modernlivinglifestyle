@@ -6,7 +6,7 @@ import { PortableText } from "@portabletext/react";
 import { AboutPage, WithContext } from "schema-dts";
 import { MoveRight } from "lucide-react";
 import { GrMail } from "react-icons/gr";
-import { FaFacebook } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import StructuredData from "@/components/structured-data";
@@ -61,7 +61,7 @@ const About: NextPage = async () => {
       "@type": "Person",
       name: SITE.creator,
       url: SITE.url + "/about",
-      sameAs: [profile.facebook, profile.youtube],
+      sameAs: [profile.instagram, profile.youtube],
       description: `Author and founder of ${SITE.name}, sharing insights on fitness, lifestyle, mental health, positivity, and personal transformation.`,
       image: urlFor(profile.image).url() ?? "",
       jobTitle: "Blogger & Wellness Content Creator",
@@ -184,9 +184,9 @@ const About: NextPage = async () => {
                   <li>
                     <Link
                       className="w-10 h-10 bg-primary text-white flex items-center justify-center rounded-full"
-                      href={profile.facebook}
+                      href={profile.instagram}
                     >
-                      <FaFacebook size={20} />
+                      <FaInstagram size={20} />
                     </Link>
                   </li>
 

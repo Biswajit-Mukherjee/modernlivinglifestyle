@@ -8,7 +8,7 @@ const AllBlogsButton: React.FC = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/blogs?page=1");
+    router.push("/blogs?page=1#blogsContainer");
   };
 
   return (

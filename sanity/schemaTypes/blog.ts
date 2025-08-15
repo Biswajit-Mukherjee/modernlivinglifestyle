@@ -33,7 +33,8 @@ export default {
       name: 'image',
       title: 'Image',
       type: 'image',
-      description: 'This will be the blog image. For best performance, upload images in WEBP format and in 16:9 aspect ratio.',
+      description:
+        'This will be the blog image. For best performance, upload images in WEBP format and in 16:9 aspect ratio.',
       options: {hotspot: true}, // Allows you to crop the image
       validation: (rule) => rule.required(),
     }),
@@ -61,6 +62,12 @@ export default {
         'This will be the list of keywords for the blog that will help in SEO. Add as many keywords as possible for best results. Do not add any # symbol.',
       of: [{type: 'string'}],
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'ytkey',
+      title: 'YouTube Video Key',
+      type: 'string',
+      description: 'This is the value of "v" attribute in your YouTube video URL',
     }),
   ],
 }
