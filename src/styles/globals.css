@@ -116,12 +116,16 @@ strong {
   @apply font-normal leading-normal antialiased;
 }
 
+.foo *[data-uia="footer-contact"] {
+  @apply text-base font-normal leading-normal antialiased text-foreground/75;
+}
+
 .foo *[data-uia="footer-contact"] a {
-  @apply text-card-foreground/60 hover:text-foreground active:text-foreground;
+  @apply text-base font-medium leading-normal antialiased text-foreground/75;
 }
 
 .foo *[data-uia="footer-links"] a {
-  @apply text-muted-foreground hover:text-primary active:text-primary;
+  @apply text-sm font-medium leading-normal antialiased text-foreground/50 hover:text-primary active:text-primary hover:underline active:underline underline-offset-2;
 }
 
 /* Modal */
