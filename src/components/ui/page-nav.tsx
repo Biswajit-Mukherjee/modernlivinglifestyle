@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NUMBER_OF_BLOGS_PER_PAGE } from "@/lib/data";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type Props = Readonly<{
   query: string;
@@ -57,18 +58,23 @@ const PageNav: React.FC<Props> = ({
 
   return (
     <div
-      className="w-full max-w-sm flex items-center justify-between mx-auto mt-0 mb-20"
+      className={cn(
+        "w-full max-w-sm flex items-center mx-auto mt-0 mb-20",
+        !prevDisabled || !nextDisabled ? "justify-center" : "justify-between"
+      )}
       data-uia="blogs-navigation"
     >
-      <Button
-        onClick={handlePrevPageClick}
-        aria-label="previous-page-btn"
-        className="[&_svg]:size-6 flex items-center justify-center gap-0 min-w-[115px]"
-        disabled={prevDisabled}
-      >
-        <ChevronLeft />
-        <span>Prev</span>
-      </Button>
+      {!prevDisabled && (
+        <Button
+          onClick={handlePrevPageClick}
+          aria-label="previous-page-btn"
+          className="[&_svg]:size-6 flex items-center justify-center gap-0 min-w-[120px] min-h-10 p-0"
+          disabled={prevDisabled}
+        >
+          <ChevronLeft />
+          <span>Previous</span>
+        </Button>
+      )}
 
       <div className="mx-6">
         <span className="text-muted-foreground antialiased">
@@ -76,15 +82,17 @@ const PageNav: React.FC<Props> = ({
         </span>
       </div>
 
-      <Button
-        onClick={handleNextPageClick}
-        aria-label="next-page-btn"
-        className="[&_svg]:size-6 flex items-center justify-center gap-0 min-w-[115px]"
-        disabled={nextDisabled}
-      >
-        <span>Next</span>
-        <ChevronRight />
-      </Button>
+      {!nextDisabled && (
+        <Button
+          onClick={handleNextPageClick}
+          aria-label="next-page-btn"
+          className="[&_svg]:size-6 flex items-center justify-center gap-0 min-w-[120px] min-h-10 p-0"
+          disabled={nextDisabled}
+        >
+          <span>Next</span>
+          <ChevronRight />
+        </Button>
+      )}
     </div>
   );
 };
