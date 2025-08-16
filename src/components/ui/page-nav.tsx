@@ -13,6 +13,7 @@ type Props = Readonly<{
   startIndex: string;
   prevDisabled?: boolean;
   nextDisabled?: boolean;
+  shouldNextNavButtonBeVisible?: boolean;
 }>;
 
 const PageNav: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const PageNav: React.FC<Props> = ({
   startIndex = "0",
   prevDisabled = false,
   nextDisabled = false,
+  shouldNextNavButtonBeVisible = false,
 }) => {
   const router = useRouter();
 
@@ -59,8 +61,10 @@ const PageNav: React.FC<Props> = ({
   return (
     <div
       className={cn(
-        "w-full max-w-sm flex items-center mx-auto mt-0 mb-20",
-        !prevDisabled || !nextDisabled ? "justify-center" : "justify-between"
+        "flex items-center mx-auto mt-0 mb-20",
+        !prevDisabled || !nextDisabled
+          ? "w-full max-w-sm justify-center"
+          : "justify-between"
       )}
       data-uia="blogs-navigation"
     >
@@ -76,13 +80,14 @@ const PageNav: React.FC<Props> = ({
         </Button>
       )}
 
-      <div className="mx-6">
-        <span className="text-muted-foreground antialiased">
-          Page <strong className="text-foreground antialiased">{page}</strong>
-        </span>
+      <div aria-label="current-page-number" className="mx-6">
+        <div className="flex items-center gap-2.5 text-muted-foreground antialiased">
+          <span>Page</span>
+          <strong className="text-foreground antialiased">{page}</strong>
+        </div>
       </div>
 
-      {!nextDisabled && (
+      {!nextDisabled && shouldNextNavButtonBeVisible && (
         <Button
           onClick={handleNextPageClick}
           aria-label="next-page-btn"

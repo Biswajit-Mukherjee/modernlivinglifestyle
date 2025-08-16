@@ -110,6 +110,27 @@ export async function getProfile() {
   return data[0];
 }
 
+/** Fetch blogs by start and end index */
+export async function getBlogsByStartAndEndIndex(
+  searchQuery: string,
+  startIndex: number = 0,
+  endIndex: number = 6
+): Promise<number> {
+  // GROQ query to fetch blogs that contains the queried string
+  const query = searchQuery
+    ? `
+    *[_type == 'blog' && (title match "*${searchQuery}*" || description match "*${searchQuery}*")] [${+startIndex}...${+endIndex}] {
+    "id": _id,
+  }`
+    : `
+    *[_type == 'blog'] [${+startIndex}...${+endIndex}] {
+    "id": _id,
+  }`;
+
+  const data: SanityTypes.Blog[] = await sanityClient.fetch(query);
+  return data.length ?? 0;
+}
+
 /** Fetch blogs by search query */
 export async function getBlogsByQuery(
   searchQuery: string,

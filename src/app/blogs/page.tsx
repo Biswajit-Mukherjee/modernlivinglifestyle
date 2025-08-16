@@ -1,21 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as React from "react";
-import Link from "next/link";
 import type { Metadata, NextPage } from "next";
 import { BlogPosting, CollectionPage, WithContext } from "schema-dts";
 import { redirect } from "next/navigation";
 import type { SanityTypes } from "@/@types";
-import { getBlogs, getBlogsByQuery } from "@/lib/utils";
+import {
+  getBlogs,
+  getBlogsByQuery,
+  getBlogsByStartAndEndIndex,
+} from "@/lib/utils";
 import SearchBox from "@/components/ui/search-box";
 import PageNav from "@/components/ui/page-nav";
 import Loader from "@/components/shared/loader";
 import FilteredBlogs from "@/components/shared/filtered-blogs";
 import BlogsNotFound from "@/components/shared/blogs-not-found";
 import StructuredData from "@/components/structured-data";
+import { NUMBER_OF_BLOGS_PER_PAGE } from "@/lib/data";
 import { SITE } from "@/lib/data";
-
-const BLOGS_END_MSG = "No more blogs to display :(";
 
 export const metadata: Metadata = {
   title:
@@ -99,18 +101,30 @@ const Blogs: NextPage<Props> = async ({ searchParams }) => {
     },
   };
 
+  /** Get filtered blogs by query and start and end index */
   const filteredBlogs: SanityTypes.Blog[] = await getBlogsByQuery(
     query,
     startIndex,
     endIndex
   );
 
+  /** Check if the current page is the last page */
+  const nextStartIndex = startIndex
+    ? +startIndex + NUMBER_OF_BLOGS_PER_PAGE
+    : NUMBER_OF_BLOGS_PER_PAGE;
+  const nextEndIndex = endIndex
+    ? +endIndex + NUMBER_OF_BLOGS_PER_PAGE
+    : 2 * NUMBER_OF_BLOGS_PER_PAGE;
+  const isNextPageAvailable: boolean = Boolean(
+    await getBlogsByStartAndEndIndex(query, +nextStartIndex, +nextEndIndex)
+  );
+
   return (
     <>
       <StructuredData data={schemaData} />
 
-      <main className="w-full min-h-screen app-bg grid gap-10 p-2.5 sm:p-3.5 md:p-5">
-        <div className="w-full max-w-[440px] mx-auto" data-uia="search">
+      <main className="w-full app-bg grid gap-10 p-2.5 sm:p-3.5 md:p-5">
+        <div className="w-full max-w-[440px] mt-5 mx-auto mb-0" data-uia="search">
           <SearchBox searchQuery={query} />
         </div>
 
@@ -119,29 +133,10 @@ const Blogs: NextPage<Props> = async ({ searchParams }) => {
           data-uia="blogs-container"
           id="blogsContainer"
         >
-          {filteredBlogs.length ? (
+          {filteredBlogs.length > 0 && (
             <React.Suspense fallback={<Loader />}>
               <FilteredBlogs query={query} blogs={filteredBlogs} />
             </React.Suspense>
-          ) : (
-            !query && (
-              <div className="w-full max-w-sm min-h-[240px] m-auto text-muted-foreground text-center">
-                <div className="w-full mx-auto mt-0 mb-5 text-5xl">
-                  ¯\_(ツ)_/¯
-                </div>
-                <div className="w-full text-center mx-auto my-5 text-base font-normal leading-normal antialiased">
-                  {BLOGS_END_MSG}
-                </div>
-                <Link
-                  role="button"
-                  aria-label="blogs-first-page-link-cta"
-                  className="block w-full bg-primary text-white rounded-lg p-4 mt-6 mx-auto mb-0"
-                  href="/blogs?page=1"
-                >
-                  Go to first page
-                </Link>
-              </div>
-            )
           )}
 
           {query && !filteredBlogs.length && (
@@ -151,13 +146,18 @@ const Blogs: NextPage<Props> = async ({ searchParams }) => {
           )}
         </section>
 
-        <PageNav
-          page={page}
-          query={query}
-          startIndex={startIndex}
-          prevDisabled={page === "1"}
-          nextDisabled={filteredBlogs.length === 0}
-        />
+        {filteredBlogs.length > 0 && (
+          <PageNav
+            page={page}
+            query={query}
+            startIndex={startIndex}
+            prevDisabled={page === "1"}
+            nextDisabled={filteredBlogs.length === 0}
+            shouldNextNavButtonBeVisible={
+              filteredBlogs.length > 0 && isNextPageAvailable
+            }
+          />
+        )}
       </main>
     </>
   );

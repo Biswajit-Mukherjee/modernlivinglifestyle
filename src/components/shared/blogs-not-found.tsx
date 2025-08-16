@@ -5,7 +5,7 @@ type Props = Readonly<{ query: string }>;
 
 const BlogsNotFound: React.FC<Props> = ({ query = '' }) => {
   return (
-    <div className="w-full max-w-md mx-auto mb-20 select-none">
+    <div className="w-full max-w-md mt-10 mx-auto mb-20 select-none">
       <Label className="block text-xl leading-normal font-medium text-center text-muted-foreground">
         No results found for{" "}
         <span className="text-foreground font-semibold">{`"${query}"`}</span>
