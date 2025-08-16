@@ -222,7 +222,7 @@ const BlogDetails: NextPage<Props> = async ({
           {blog.ytkey && (
             <section className="w-full" data-uia="blog-multimedia">
               <div
-                className="flex items-center justify-center mt-2 mx-auto mb-20"
+                className="yt-player-wrapper w-full h-[202.5px] sm:h-[270px] md:h-[360px] aspect-auto max-w-[360px] sm:max-w-[480px] md:max-w-[640px] flex items-center justify-center mt-2.5 mx-auto mb-20"
                 data-uia="youtube-player-container"
               >
                 <YouTubePlayer id={blog.id} videoId={blog.ytkey} />

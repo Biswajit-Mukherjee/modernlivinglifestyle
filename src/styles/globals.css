@@ -140,3 +140,12 @@ strong {
   @apply flex flex-col flex-1;
   @apply box-border;
 }
+
+/* Youtube player */
+.yt-player-wrapper > div {
+  @apply w-full h-full flex-1;
+}
+
+.yt-player-wrapper iframe {
+  @apply w-full max-w-full h-full aspect-auto;
+}
